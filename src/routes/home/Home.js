@@ -19,7 +19,7 @@ import {
   CartesianGrid, AreaChart, Bar, BarChart,
   ResponsiveContainer } from '../../vendor/recharts';
 
-const title = 'Sb Admin React';
+const title = 'The big brother';
 
 
 const data = [
@@ -43,7 +43,7 @@ function Home(props, context) {
       </div>
 
       <div className="row">
-        <div className="col-lg-3 col-md-6">
+       {/*  <div className="col-lg-3 col-md-6">
           <StatWidget
             style="panel-primary"
             icon="fa fa-comments fa-5x"
@@ -53,7 +53,7 @@ function Home(props, context) {
             linkTo="/"
           />
         </div>
-        <div className="col-lg-3 col-md-6">
+      {   <div className="col-lg-3 col-md-6">
           <StatWidget
             style="panel-green"
             icon="fa fa-tasks fa-5x"
@@ -63,12 +63,13 @@ function Home(props, context) {
             linkTo="/"
           />
         </div>
+         */}
         <div className="col-lg-3 col-md-6">
           <StatWidget
             style="panel-yellow"
             icon="fa fa-warning fa-5x"
             count="124"
-            headerText="Warning Alerts!"
+            headerText="Warnings"
             footerText="View Details"
             linkTo="/"
           />
@@ -78,7 +79,7 @@ function Home(props, context) {
             style="panel-red"
             icon="fa fa-support fa-5x"
             count="13"
-            headerText="Support Tickets!"
+            headerText="Alerts"
             footerText="View Details"
             linkTo="/"
           />
@@ -225,39 +226,39 @@ function Home(props, context) {
           >
             <ListGroup>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-comment fa-fw" /> New Comment
+                <i className="fa fa-info-circle" /> Login to server
                 <span className="pull-right text-muted small"><em>4 minutes ago</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-twitter fa-fw" /> 3 New Followers
+                <i className="fa fa-info-circle" /> File received 
                 <span className="pull-right text-muted small"><em>12 minutes ago</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-envelope fa-fw" /> Message Sent
+                <i className="fa fa-info-circle" /> Connect to server
                 <span className="pull-right text-muted small"><em>27 minutes ago</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-tasks fa-fw" /> New Task
+                <i className="fa fa-info-circle" /> Disconnect from server
                 <span className="pull-right text-muted small"><em>43 minutes ago</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-upload fa-fw" /> Server Rebooted
+                <i className="fa fa-info-circle" /> Server rebooted
                 <span className="pull-right text-muted small"><em>11:32 AM</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-bolt fa-fw" /> Server Crashed!
+                <i className="fa fa-info-circle" /> Server crashed!
                 <span className="pull-right text-muted small"><em>11:13 AM</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-warning fa-fw" /> Server Not Responding
+                <i className="fa fa-info-circle" /> Server not responding
                 <span className="pull-right text-muted small"><em>10:57 AM</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-shopping-cart fa-fw" /> New Order Placed
+                <i className="fa fa-info-circle" /> New connection to agent
                 <span className="pull-right text-muted small"><em>9:49 AM</em></span>
               </ListGroupItem>
               <ListGroupItem href="" onClick={(e) => { e.preventDefault(); }}>
-                <i className="fa fa-money fa-fw" /> Payment Received
+                <i className="fa fa-info-circle" /> File sent
                 <span className="pull-right text-muted small"><em>Yesterday</em></span>
               </ListGroupItem>
             </ListGroup>

@@ -20,9 +20,8 @@ function Header() {
       <Navbar fluid={true}  style={ {margin: 0} }>
           <Brand>
             <span>
-              <img src={logo} alt="Start React" title="Start React" />
-              <span>&nbsp;SB Admin React - </span>
-                <a href="http://startreact.com/" title="Start React" rel="home">StartReact.com</a>
+              <img src={logo}/>
+              <span>&nbsp;Big Brother</span>
                 <button type="button" className="navbar-toggle" onClick={() => {toggleMenu();}} style={{position: 'absolute', right: 0, top: 0}}>
                   <span className="sr-only">Toggle navigation</span>
                   <span className="icon-bar"></span>
@@ -31,7 +30,7 @@ function Header() {
                 </button>
             </span>
           </Brand>
-          <ul className="nav navbar-top-links navbar-right">
+      {/* <ul className="nav navbar-top-links navbar-right">
 
               <NavDropdown bsClass="dropdown" title={<span><i className="fa fa-envelope fa-fw"></i></span>} id="navDropdown1">
                 <MenuItem style={ {width: 300} } eventKey="1">
@@ -138,9 +137,8 @@ function Header() {
                     <span> <i className = "fa fa-sign-out fa-fw" /> Logout </span>
                   </MenuItem>
             </NavDropdown>
-
-          </ul>
-          <Sidebar />
+            </ul>
+  */}         <Sidebar />
     </Navbar>
     </div>
   );
