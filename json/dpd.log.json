@@ -1,0 +1,134 @@
+[
+  {
+    "ts": "1295981642.881910",
+    "uid": "CLcWD32nrSfaEJn3Ul",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10622",
+    "id.resp_h": "147.31.122.1",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 30372"
+  },
+  {
+    "ts": "1295981661.225163",
+    "uid": "CE0hOOXnUnop4AyB9",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10658",
+    "id.resp_h": "109.173.29.34",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 41472"
+  },
+  {
+    "ts": "1295981661.600520",
+    "uid": "CbmaOv4w6NorffHvef",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10659",
+    "id.resp_h": "109.255.178.86",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 2051"
+  },
+  {
+    "ts": "1295981663.407143",
+    "uid": "CY2Yqu1eRCvfcHuJuh",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10671",
+    "id.resp_h": "109.227.83.224",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 10160"
+  },
+  {
+    "ts": "1295981670.101162",
+    "uid": "CNcHHnJh4kafeCPo2",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10683",
+    "id.resp_h": "109.173.29.34",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 2342"
+  },
+  {
+    "ts": "1295981670.193121",
+    "uid": "CQ98mZ2RJBUFP7X3Ki",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10682",
+    "id.resp_h": "109.227.83.224",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 49599"
+  },
+  {
+    "ts": "1295981670.208548",
+    "uid": "C3TkmW2c4u7jFOKQEf",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10684",
+    "id.resp_h": "109.229.25.126",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 56846"
+  },
+  {
+    "ts": "1295981672.320078",
+    "uid": "CuAKxA3nl2383zHlng",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10687",
+    "id.resp_h": "109.90.123.126",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 3044"
+  },
+  {
+    "ts": "1295981676.205643",
+    "uid": "CFNjEx13grsmzTzSe7",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10690",
+    "id.resp_h": "109.173.29.34",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 20171"
+  },
+  {
+    "ts": "1295981676.277081",
+    "uid": "CZrTxGONL2m68MeGk",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10689",
+    "id.resp_h": "109.227.83.224",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 14928"
+  },
+  {
+    "ts": "1295981734.118373",
+    "uid": "CzkKT23URxUhA4NQQi",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10697",
+    "id.resp_h": "109.173.29.34",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 11667"
+  },
+  {
+    "ts": "1295981734.186526",
+    "uid": "CYvncJrmlXnt1jgld",
+    "id.orig_h": "172.16.255.1",
+    "id.orig_p": "10696",
+    "id.resp_h": "109.227.83.224",
+    "id.resp_p": "443",
+    "proto": "tcp",
+    "analyzer": "SSL",
+    "failure_reason": "Invalid version late in TLS connection. Packet reported version: 4832"
+  }
+]
