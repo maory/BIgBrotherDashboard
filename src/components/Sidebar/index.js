@@ -59,7 +59,7 @@ class Sidebar extends Component {
               >
                 <li>
                   <a href="" onClick={(e) => { e.preventDefault(); history.push('/flotcharts'); }} >
-                    FlotCharts
+                    Statistics
                   </a>
                 </li>
                 <li>

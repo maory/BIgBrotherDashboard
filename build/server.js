@@ -927,7 +927,7 @@ module.exports =
   
   var _buttons2 = _interopRequireDefault(_buttons);
   
-  var _flotCharts = __webpack_require__(161);
+  var _flotCharts = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./dashboardPages/flotCharts\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
   
   var _flotCharts2 = _interopRequireDefault(_flotCharts);
   
@@ -1624,7 +1624,7 @@ module.exports =
                       { href: '', onClick: function onClick(e) {
                           e.preventDefault();_history2.default.push('/flotcharts');
                         } },
-                      'FlotCharts'
+                      'Statistics'
                     )
                   ),
                   _react2.default.createElement(
@@ -2088,7 +2088,7 @@ module.exports =
           _react2.default.createElement(_Widget2.default, {
             style: 'panel-yellow',
             icon: 'fa fa-warning fa-5x',
-            count: '124',
+            count: '20',
             headerText: 'Warnings',
             footerText: 'View Details',
             linkTo: '/'
@@ -2100,7 +2100,7 @@ module.exports =
           _react2.default.createElement(_Widget2.default, {
             style: 'panel-red',
             icon: 'fa fa-support fa-5x',
-            count: '13',
+            count: '2',
             headerText: 'Alerts',
             footerText: 'View Details',
             linkTo: '/'
@@ -2110,266 +2110,18 @@ module.exports =
       _react2.default.createElement(
         'div',
         { className: 'row' },
+        _react2.default.createElement('div', { className: 'col-lg-8' }),
         _react2.default.createElement(
           'div',
-          { className: 'col-lg-8' },
+          { className: 'col-lg-0' },
           _react2.default.createElement(
             _reactBootstrap.Panel,
             {
               header: _react2.default.createElement(
                 'span',
                 null,
-                _react2.default.createElement('i', { className: 'fa fa-bar-chart-o fa-fw' }),
-                ' Area Chart Example',
-                _react2.default.createElement(
-                  'div',
-                  { className: 'pull-right' },
-                  _react2.default.createElement(
-                    _reactBootstrap.DropdownButton,
-                    { title: 'Dropdown', bsSize: 'xs', pullRight: true, id: 'dropdownButton1' },
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '1' },
-                      'Action'
-                    ),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '2' },
-                      'Another action'
-                    ),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '3' },
-                      'Something else here'
-                    ),
-                    _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '4' },
-                      'Separated link'
-                    )
-                  )
-                )
-              )
-            },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                _recharts.ResponsiveContainer,
-                { width: '100%', aspect: 2 },
-                _react2.default.createElement(
-                  _recharts.AreaChart,
-                  { data: data, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
-                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
-                  _react2.default.createElement(_recharts.YAxis, null),
-                  _react2.default.createElement(_recharts.CartesianGrid, { stroke: '#ccc' }),
-                  _react2.default.createElement(_recharts.Tooltip, null),
-                  _react2.default.createElement(_recharts.Area, { type: 'monotone', dataKey: 'uv', stackId: '1', stroke: '#8884d8', fill: '#8884d8' }),
-                  _react2.default.createElement(_recharts.Area, { type: 'monotone', dataKey: 'pv', stackId: '1', stroke: '#82ca9d', fill: '#82ca9d' }),
-                  _react2.default.createElement(_recharts.Area, { type: 'monotone', dataKey: 'amt', stackId: '1', stroke: '#ffc658', fill: '#ffc658' })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Panel,
-            {
-              header: _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement('i', { className: 'fa fa-bar-chart-o fa-fw' }),
-                ' Bar Chart Example',
-                _react2.default.createElement(
-                  'div',
-                  { className: 'pull-right' },
-                  _react2.default.createElement(
-                    _reactBootstrap.DropdownButton,
-                    { title: 'Dropdown', bsSize: 'xs', pullRight: true, id: 'dropdownButton2' },
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '1' },
-                      'Action'
-                    ),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '2' },
-                      'Another action'
-                    ),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '3' },
-                      'Something else here'
-                    ),
-                    _react2.default.createElement(_reactBootstrap.MenuItem, { divider: true }),
-                    _react2.default.createElement(
-                      _reactBootstrap.MenuItem,
-                      { eventKey: '4' },
-                      'Separated link'
-                    )
-                  )
-                )
-              )
-            },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                _recharts.ResponsiveContainer,
-                { width: '100%', aspect: 2 },
-                _react2.default.createElement(
-                  _recharts.BarChart,
-                  { data: data, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
-                  _react2.default.createElement(_recharts.CartesianGrid, { stroke: '#ccc' }),
-                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
-                  _react2.default.createElement(_recharts.YAxis, null),
-                  _react2.default.createElement(_recharts.Tooltip, null),
-                  _react2.default.createElement(_recharts.Bar, { dataKey: 'pv', stackId: '1', fill: '#8884d8' }),
-                  _react2.default.createElement(_recharts.Bar, { dataKey: 'uv', stackId: '1', fill: '#82ca9d' }),
-                  _react2.default.createElement(_recharts.Bar, { type: 'monotone', dataKey: 'amt', fill: '#ffc658' })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Panel,
-            {
-              header: _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement('i', { className: 'fa fa-clock-o fa-fw' }),
-                ' Responsive Timeline'
-              )
-            },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'ul',
-                { className: 'timeline' },
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-badge' },
-                    _react2.default.createElement('i', { className: 'fa fa-check' })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-panel' },
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-heading' },
-                      _react2.default.createElement(
-                        'h4',
-                        { className: 'timeline-title' },
-                        'Lorem ipsum dolor'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        _react2.default.createElement(
-                          'small',
-                          { className: 'text-muted' },
-                          _react2.default.createElement('i', { className: 'fa fa-clock-o' }),
-                          ' 11 hours ago via Twitter'
-                        )
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-body' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.'
-                      )
-                    )
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  { className: 'timeline-inverted' },
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-badge warning' },
-                    _react2.default.createElement('i', { className: 'fa fa-credit-card' })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-panel' },
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-heading' },
-                      _react2.default.createElement(
-                        'h4',
-                        { className: 'timeline-title' },
-                        'Lorem ipsum dolor'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-body' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.'
-                      ),
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.'
-                      )
-                    )
-                  )
-                ),
-                _react2.default.createElement(
-                  'li',
-                  null,
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-badge danger' },
-                    _react2.default.createElement('i', { className: 'fa fa-bomb' })
-                  ),
-                  _react2.default.createElement(
-                    'div',
-                    { className: 'timeline-panel' },
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-heading' },
-                      _react2.default.createElement(
-                        'h4',
-                        { className: 'timeline-title' },
-                        'Lorem ipsum dolor'
-                      )
-                    ),
-                    _react2.default.createElement(
-                      'div',
-                      { className: 'timeline-body' },
-                      _react2.default.createElement(
-                        'p',
-                        null,
-                        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.'
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-4' },
-          _react2.default.createElement(
-            _reactBootstrap.Panel,
-            {
-              header: _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement('i', { className: 'fa fa-bell fa-fw' }),
-                ' Notifications Panel'
+                _react2.default.createElement('i', { className: 'fa fa-list-alt fa-fw' }),
+                ' Event log'
               )
             },
             _react2.default.createElement(
@@ -2532,23 +2284,7 @@ module.exports =
             _react2.default.createElement(
               _reactBootstrap.Button,
               { block: true },
-              'View All Alerts'
-            )
-          ),
-          _react2.default.createElement(
-            _reactBootstrap.Panel,
-            {
-              header: _react2.default.createElement(
-                'span',
-                null,
-                _react2.default.createElement('i', { className: 'fa fa-bar-chart-o fa-fw' }),
-                ' Donut Chart Example'
-              )
-            },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(_Donut2.default, { data: data, color: '#8884d8', innerRadius: '70%', outerRadius: '90%' })
+              'View All Events'
             )
           )
         )
@@ -22547,275 +22283,8 @@ module.exports =
   exports.default = displayButtons;
 
 /***/ }),
-/* 161 */
-/***/ (function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  
-  var _react = __webpack_require__(11);
-  
-  var _react2 = _interopRequireDefault(_react);
-  
-  var _FlotCharts = __webpack_require__(162);
-  
-  var _FlotCharts2 = _interopRequireDefault(_FlotCharts);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  exports.default = {
-  
-    path: '/flotcharts',
-  
-    action: function action() {
-      return _react2.default.createElement(_FlotCharts2.default, null);
-    }
-  };
-
-/***/ }),
-/* 162 */
-/***/ (function(module, exports, __webpack_require__) {
-
-  'use strict';
-  
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  
-  var _react = __webpack_require__(11);
-  
-  var _react2 = _interopRequireDefault(_react);
-  
-  var _Button = __webpack_require__(150);
-  
-  var _Button2 = _interopRequireDefault(_Button);
-  
-  var _Panel = __webpack_require__(151);
-  
-  var _Panel2 = _interopRequireDefault(_Panel);
-  
-  var _PageHeader = __webpack_require__(157);
-  
-  var _PageHeader2 = _interopRequireDefault(_PageHeader);
-  
-  var _recharts = __webpack_require__(100);
-  
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-  
-  var title = 'Flot Charts';
-  
-  function plotData() {
-    var data = [];
-    var offset = 0;
-    var sineValue = void 0;
-    var cosValue = void 0;
-    for (var i = 0; i < 12; i += 0.8) {
-      sineValue = Math.sin(i + offset);
-      cosValue = Math.cos(i + offset);
-      data.push({ name: i, sine: sineValue, cosine: cosValue });
-      // data.push({ name: i, cosine: cosValue });
-    }
-    return data;
-  }
-  var lineChartData = plotData();
-  
-  var pieChartData = [{ name: 'Group A', value: 400 }, { name: 'Group B', value: 300 }, { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 }, { name: 'Group E', value: 278 }, { name: 'Group F', value: 189 }];
-  
-  var BarChartData = [{ name: 'Page A', uv: 4000.343, pv: 2400, amt: 2400 }, { name: 'Page B', uv: 3000.6756754, pv: 1398, amt: 2210 }, { name: 'Page C', uv: 2000.987654, pv: 9800, amt: 2290 }, { name: 'Page D', uv: 2780.472384, pv: 3908, amt: 2000 }, { name: 'Page E', uv: 1890.98347593, pv: 4800, amt: 2181 }, { name: 'Page F', uv: 2390.28913479283, pv: 3800, amt: 2500 }, { name: 'Page G', uv: 3490.2345678, pv: 4300, amt: 2100 }];
-  
-  function displayFlotCharts(props, context) {
-    context.setTitle(title);
-    return _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-12' },
-          _react2.default.createElement(
-            _PageHeader2.default,
-            null,
-            'Flot'
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-12' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Line Chart Example'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                _recharts.ResponsiveContainer,
-                { width: '100%', aspect: 2 },
-                _react2.default.createElement(
-                  _recharts.LineChart,
-                  { data: lineChartData, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
-                  _react2.default.createElement(_recharts.CartesianGrid, { stroke: '#ccc' }),
-                  _react2.default.createElement(_recharts.XAxis, null),
-                  _react2.default.createElement(_recharts.YAxis, null),
-                  _react2.default.createElement(_recharts.Tooltip, null),
-                  _react2.default.createElement(_recharts.Line, { type: 'monotone', dataKey: 'sine', stroke: '#8884d8' }),
-                  _react2.default.createElement(_recharts.Line, { type: 'monotone', dataKey: 'cosine', stroke: '#82ca9d' })
-                )
-              )
-            )
-          )
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'row' },
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-6' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Pie Chart Example'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                _recharts.ResponsiveContainer,
-                { width: '100%', aspect: 2 },
-                _react2.default.createElement(
-                  _recharts.PieChart,
-                  null,
-                  _react2.default.createElement(_recharts.Pie, { isAnimationActive: false, data: pieChartData, fill: '#8884d8', label: true }),
-                  _react2.default.createElement(_recharts.Tooltip, null)
-                )
-              )
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-6' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Bar Chart Example'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                _recharts.ResponsiveContainer,
-                { width: '100%', aspect: 2 },
-                _react2.default.createElement(
-                  _recharts.BarChart,
-                  {
-                    data: BarChartData,
-                    margin: { top: 5, right: 30, left: 20, bottom: 5 }
-                  },
-                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
-                  _react2.default.createElement(_recharts.YAxis, null),
-                  _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
-                  _react2.default.createElement(_recharts.Tooltip, null),
-                  _react2.default.createElement(_recharts.Legend, null),
-                  _react2.default.createElement(_recharts.Bar, { dataKey: 'pv', fill: '#8884d8' }),
-                  _react2.default.createElement(_recharts.Bar, { dataKey: 'uv', fill: '#82ca9d' })
-                )
-              )
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-6' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Multiple Axes Line Chart Example'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              'Panel contents'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-6' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Moving Line Chart Example'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              'Panel contents'
-            )
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'col-lg-12' },
-          _react2.default.createElement(
-            _Panel2.default,
-            { header: _react2.default.createElement(
-                'span',
-                null,
-                'Flot Charts Usage'
-              ) },
-            _react2.default.createElement(
-              'div',
-              null,
-              _react2.default.createElement(
-                'p',
-                null,
-                'Flot is a pure JavaScript plotting library for jQuery, with a focus on simple usage, attractive looks, and interactive features. In SB Admin, we are using the most recent version of Flot along with a few plugins to enhance the user experience. The Flot plugins being used are the tooltip plugin for hoverable tooltips, and the resize plugin for fully responsive charts. The documentation for Flot Charts is available on their website,',
-                _react2.default.createElement(
-                  'a',
-                  { target: '_blank', rel: 'noopener noreferrer', href: 'http://www.flotcharts.org/' },
-                  '"http://www.flotcharts.org/"'
-                ),
-                '.'
-              ),
-              _react2.default.createElement(
-                _Button2.default,
-                { bsSize: 'large', block: true, href: 'http://www.flotcharts.org/' },
-                'View Flot Charts Documentation'
-              )
-            )
-          )
-        )
-      )
-    );
-  }
-  
-  displayFlotCharts.contextTypes = { setTitle: _react.PropTypes.func.isRequired };
-  
-  exports.default = displayFlotCharts;
-
-/***/ }),
+/* 161 */,
+/* 162 */,
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 

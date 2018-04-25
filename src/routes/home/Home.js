@@ -68,7 +68,7 @@ function Home(props, context) {
           <StatWidget
             style="panel-yellow"
             icon="fa fa-warning fa-5x"
-            count="124"
+            count="20"
             headerText="Warnings"
             footerText="View Details"
             linkTo="/"
@@ -78,7 +78,7 @@ function Home(props, context) {
           <StatWidget
             style="panel-red"
             icon="fa fa-support fa-5x"
-            count="13"
+            count="2"
             headerText="Alerts"
             footerText="View Details"
             linkTo="/"
@@ -88,8 +88,8 @@ function Home(props, context) {
 
       <div className="row">
         <div className="col-lg-8">
-
-          <Panel
+{/*
+           <Panel
             header={<span>
               <i className="fa fa-bar-chart-o fa-fw" /> Area Chart Example
               <div className="pull-right">
@@ -214,14 +214,14 @@ function Home(props, context) {
               </ul>
             </div>
           </Panel>
-
+*/}
         </div>
-
-        <div className="col-lg-4">
+ 
+        <div className="col-lg-0">
 
           <Panel
             header={<span>
-              <i className="fa fa-bell fa-fw" /> Notifications Panel
+              <i className="fa fa-list-alt fa-fw" /> Event log 
             </span>}
           >
             <ListGroup>
@@ -262,10 +262,10 @@ function Home(props, context) {
                 <span className="pull-right text-muted small"><em>Yesterday</em></span>
               </ListGroupItem>
             </ListGroup>
-            <Button block>View All Alerts</Button>
+            <Button block>View All Events</Button>
           </Panel>
 
-          <Panel
+         {/*  <Panel
             header={<span>
               <i className="fa fa-bar-chart-o fa-fw" /> Donut Chart Example
             </span>}
@@ -273,7 +273,7 @@ function Home(props, context) {
             <div>
               <Donut data={data} color="#8884d8" innerRadius="70%" outerRadius="90%" />
             </div>
-          </Panel>
+          </Panel> */}
 
         </div>
 

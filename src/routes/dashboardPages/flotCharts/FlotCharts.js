@@ -10,7 +10,7 @@ import {
 
 const title = 'Flot Charts';
 
-function plotData() {
+/* function plotData() {
   const data = [];
   const offset = 0;
   let sineValue;
@@ -23,23 +23,66 @@ function plotData() {
   }
   return data;
 }
-const lineChartData = plotData();
+ */
+const lineChartData = [
+  { name: '00:00', data: 1200 },
+  { name: '01:00', data: 1200 },
+  { name: '02:00', data: 1200 },
+  { name: '03:00', data: 1200 },
+  { name: '04:00', data: 1200 },
+  { name: '05:00', data: 1300 },
+  { name: '06:00', data: 1350 },
+  { name: '07:00', data: 1578 },
+  { name: '08:00', data: 1907 },
+  { name: '09:00', data: 2657 },
+  { name: '10:00', data: 5679 },
+  { name: '11:00', data: 6743 },
+  { name: '12:00', data: 7532 },
+  { name: '13:00', data: 5786 },
+  { name: '14:00', data: 8535 },
+  { name: '15:00', data: 7535 },
+  { name: '16:00', data: 6542 },
+  { name: '17:00', data: 4675 },
+  { name: '18:00', data: 3242 },
+  { name: '19:00', data: 2356 },
+  { name: '20:00', data: 1567 },
+  { name: '21:00', data: 1200 },
+  { name: '22:00', data: 1200 },
+  { name: '23:00', data: 1200 },
+];//plotData();
 
-
-const pieChartData = [
-  { name: 'Group A', value: 400 }, { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 }, { name: 'Group D', value: 200 },
-  { name: 'Group E', value: 278 }, { name: 'Group F', value: 189 },
+const serviceChartData = [
+  { name: 'ssl', value: 1123 }, 
+  { name: 'none', value: 346 }, 
+  { name: 'http', value: 9876 }, 
 ];
 
-const BarChartData = [
-  { name: 'Page A', uv: 4000.343, pv: 2400, amt: 2400 },
-  { name: 'Page B', uv: 3000.6756754, pv: 1398, amt: 2210 },
-  { name: 'Page C', uv: 2000.987654, pv: 9800, amt: 2290 },
-  { name: 'Page D', uv: 2780.472384, pv: 3908, amt: 2000 },
-  { name: 'Page E', uv: 1890.98347593, pv: 4800, amt: 2181 },
-  { name: 'Page F', uv: 2390.28913479283, pv: 3800, amt: 2500 },
-  { name: 'Page G', uv: 3490.2345678, pv: 4300, amt: 2100 },
+const sessionDurationChartData = [
+  { name: '0.5-1 sec', value: 1123 }, 
+  { name: '1-1.5 sec', value: 1432 },
+  { name: '0-0.5 sec', value: 3654 }, 
+  { name: '1.5-2 sec', value: 653 },
+  { name: '>2 sec', value: 94 }, 
+];
+
+const protocolChartData = [
+  { name: 'TCP', count: 400 },
+  { name: 'UDP', count: 200 },
+  { name: 'ICMP', count: 100 },
+];
+
+const bytesStatisticChartData = [
+  { name: 'Originator payload bytes ', value: 9374521 }, 
+  { name: 'Responder payload bytes', value: 5316423 }, 
+  { name: 'Missing bytes', value: 16354 }, 
+];
+
+const ipsByCountrryChartData = [
+  { name: 'Viatnam', value: 1123 }, 
+  { name: 'Israel', value: 1432 },
+  { name: 'Iran', value: 3654 }, 
+  { name: 'Russia', value: 653 },
+  { name: 'Lebanon', value: 94 }, 
 ];
 
 function displayFlotCharts(props, context) {
@@ -48,13 +91,13 @@ function displayFlotCharts(props, context) {
     <div>
       <div className="row">
         <div className="col-lg-12">
-          <PageHeader>Flot</PageHeader>
+          <PageHeader>Statistics</PageHeader>
         </div>
       </div>
 
       <div className="row">
         <div className="col-lg-12">
-          <Panel header={<span>Line Chart Example</span>} >
+          <Panel header={<span>Data (Bytes/hour)</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
                 <LineChart data={lineChartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -62,36 +105,20 @@ function displayFlotCharts(props, context) {
                   <XAxis />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="sine" stroke="#8884d8" />
-                  <Line type="monotone" dataKey="cosine" stroke="#82ca9d" />
+                  <Line type="data"  dataKey="data" stroke="#82ca9d" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
       </div>
-
       <div className="row">
-        <div className="col-lg-6">
-          <Panel header={<span>Pie Chart Example</span>} >
-            <div>
-              <ResponsiveContainer width="100%" aspect={2}>
-                <PieChart >
-                  <Pie isAnimationActive={false} data={pieChartData} fill="#8884d8" label />
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-          </Panel>
-        </div>
-
-
-        <div className="col-lg-6">
-          <Panel header={<span>Bar Chart Example</span>} >
+       <div className="col-lg-6">
+          <Panel header={<span>Service type</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
                 <BarChart
-                  data={BarChartData}
+                  data={serviceChartData}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                   <XAxis dataKey="name" />
@@ -99,14 +126,85 @@ function displayFlotCharts(props, context) {
                   <CartesianGrid strokeDasharray="3 3" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="pv" fill="#8884d8" />
-                  <Bar dataKey="uv" fill="#82ca9d" />
+                  <Bar dataKey="value" fill="#88cc00" />
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
+        <div className="col-lg-6">
+          <Panel header={<span>Protocol (24h)</span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+                <BarChart
+                  data={protocolChartData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="count" fill="#8884d8" />
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+        </div>
+        </div>
 
+      <div className="row">
+       <div className="col-lg-6">
+          <Panel header={<span>Bytes statistic (24h)</span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+                <BarChart
+                  data={bytesStatisticChartData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                >
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="value" fill="#E74C3C" />
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+        </div>
+      
+        <div className="col-lg-6">
+          <Panel header={<span>Session duration</span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+                <PieChart >
+                  <Pie isAnimationActive={true} data={sessionDurationChartData} fill=" #007acc" label  />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+        </div>
+
+        <div className="row">
+        <div className="col-lg-12">
+          <Panel header={<span>Ips by country</span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+                <PieChart >
+                  <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label  />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+        </div>
+        </div>
+{/* 
         <div className="col-lg-6">
           <Panel header={<span>Multiple Axes Line Chart Example</span>} >
             <div>
@@ -139,7 +237,7 @@ function displayFlotCharts(props, context) {
             </div>
           </Panel>
         </div>
-
+*/}
       </div>
     </div>
   );
