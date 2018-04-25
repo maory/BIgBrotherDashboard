@@ -927,7 +927,7 @@ module.exports =
   
   var _buttons2 = _interopRequireDefault(_buttons);
   
-  var _flotCharts = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./dashboardPages/flotCharts\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+  var _flotCharts = __webpack_require__(161);
   
   var _flotCharts2 = _interopRequireDefault(_flotCharts);
   
@@ -22283,8 +22283,300 @@ module.exports =
   exports.default = displayButtons;
 
 /***/ }),
-/* 161 */,
-/* 162 */,
+/* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
+  var _react = __webpack_require__(11);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  var _FlotCharts = __webpack_require__(162);
+  
+  var _FlotCharts2 = _interopRequireDefault(_FlotCharts);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  exports.default = {
+  
+    path: '/flotcharts',
+  
+    action: function action() {
+      return _react2.default.createElement(_FlotCharts2.default, null);
+    }
+  };
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports, __webpack_require__) {
+
+  'use strict';
+  
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  
+  var _react = __webpack_require__(11);
+  
+  var _react2 = _interopRequireDefault(_react);
+  
+  var _Button = __webpack_require__(150);
+  
+  var _Button2 = _interopRequireDefault(_Button);
+  
+  var _Panel = __webpack_require__(151);
+  
+  var _Panel2 = _interopRequireDefault(_Panel);
+  
+  var _PageHeader = __webpack_require__(157);
+  
+  var _PageHeader2 = _interopRequireDefault(_PageHeader);
+  
+  var _recharts = __webpack_require__(100);
+  
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  
+  var title = 'Flot Charts';
+  
+  var lineChartData = [{ name: '00:00', data: 1200 }, { name: '01:00', data: 1200 }, { name: '02:00', data: 1200 }, { name: '03:00', data: 1200 }, { name: '04:00', data: 1200 }, { name: '05:00', data: 1300 }, { name: '06:00', data: 1350 }, { name: '07:00', data: 1578 }, { name: '08:00', data: 1907 }, { name: '09:00', data: 2657 }, { name: '10:00', data: 5679 }, { name: '11:00', data: 6743 }, { name: '12:00', data: 7532 }, { name: '13:00', data: 5786 }, { name: '14:00', data: 8535 }, { name: '15:00', data: 7535 }, { name: '16:00', data: 6542 }, { name: '17:00', data: 4675 }, { name: '18:00', data: 3242 }, { name: '19:00', data: 2356 }, { name: '20:00', data: 1567 }, { name: '21:00', data: 1200 }, { name: '22:00', data: 1200 }, { name: '23:00', data: 1200 }];
+  
+  var serviceChartData = [{ name: 'ssl', value: 1123 }, { name: 'none', value: 346 }, { name: 'http', value: 9876 }];
+  
+  var sessionDurationChartData = [{ name: '0.5-1 sec', value: 1123 }, { name: '1-1.5 sec', value: 1432 }, { name: '0-0.5 sec', value: 3654 }, { name: '1.5-2 sec', value: 653 }, { name: '>2 sec', value: 94 }];
+  
+  var protocolChartData = [{ name: 'TCP', count: 400 }, { name: 'UDP', count: 200 }, { name: 'ICMP', count: 100 }];
+  
+  var bytesStatisticChartData = [{ name: 'Originator payload bytes ', value: 9374521 }, { name: 'Responder payload bytes', value: 5316423 }, { name: 'Missing bytes', value: 16354 }];
+  
+  var ipsByCountrryChartData = [{ name: 'Viatnam', value: 1123 }, { name: 'Israel', value: 1432 }, { name: 'Iran', value: 3654 }, { name: 'Russia', value: 653 }, { name: 'Lebanon', value: 94 }];
+  
+  function displayFlotCharts(props, context) {
+    context.setTitle(title);
+    return _react2.default.createElement(
+      'div',
+      null,
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-12' },
+          _react2.default.createElement(
+            _PageHeader2.default,
+            null,
+            'Statistics'
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-12' },
+          _react2.default.createElement(
+            _Panel2.default,
+            { header: _react2.default.createElement(
+                'span',
+                null,
+                'Data (Bytes/hour)'
+              ) },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _recharts.ResponsiveContainer,
+                { width: '100%', aspect: 2 },
+                _react2.default.createElement(
+                  _recharts.LineChart,
+                  { data: lineChartData, margin: { top: 10, right: 30, left: 0, bottom: 0 } },
+                  _react2.default.createElement(_recharts.CartesianGrid, { stroke: '#ccc' }),
+                  _react2.default.createElement(_recharts.XAxis, null),
+                  _react2.default.createElement(_recharts.YAxis, null),
+                  _react2.default.createElement(_recharts.Tooltip, null),
+                  _react2.default.createElement(_recharts.Line, { type: 'data', dataKey: 'data', stroke: '#82ca9d' })
+                )
+              )
+            )
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-6' },
+          _react2.default.createElement(
+            _Panel2.default,
+            { header: _react2.default.createElement(
+                'span',
+                null,
+                'Service type'
+              ) },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _recharts.ResponsiveContainer,
+                { width: '100%', aspect: 2 },
+                _react2.default.createElement(
+                  _recharts.BarChart,
+                  {
+                    data: serviceChartData,
+                    margin: { top: 5, right: 30, left: 20, bottom: 5 }
+                  },
+                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
+                  _react2.default.createElement(_recharts.YAxis, null),
+                  _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
+                  _react2.default.createElement(_recharts.Tooltip, null),
+                  _react2.default.createElement(_recharts.Legend, null),
+                  _react2.default.createElement(_recharts.Bar, { dataKey: 'value', fill: '#88cc00' })
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-6' },
+          _react2.default.createElement(
+            _Panel2.default,
+            { header: _react2.default.createElement(
+                'span',
+                null,
+                'Protocol (24h)'
+              ) },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _recharts.ResponsiveContainer,
+                { width: '100%', aspect: 2 },
+                _react2.default.createElement(
+                  _recharts.BarChart,
+                  {
+                    data: protocolChartData,
+                    margin: { top: 5, right: 30, left: 20, bottom: 5 }
+                  },
+                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
+                  _react2.default.createElement(_recharts.YAxis, null),
+                  _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
+                  _react2.default.createElement(_recharts.Tooltip, null),
+                  _react2.default.createElement(_recharts.Legend, null),
+                  _react2.default.createElement(_recharts.Bar, { dataKey: 'count', fill: '#8884d8' })
+                )
+              )
+            )
+          )
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'row' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-6' },
+          _react2.default.createElement(
+            _Panel2.default,
+            { header: _react2.default.createElement(
+                'span',
+                null,
+                'Bytes statistic (24h)'
+              ) },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _recharts.ResponsiveContainer,
+                { width: '100%', aspect: 2 },
+                _react2.default.createElement(
+                  _recharts.BarChart,
+                  {
+                    data: bytesStatisticChartData,
+                    margin: { top: 5, right: 30, left: 20, bottom: 5 }
+                  },
+                  _react2.default.createElement(_recharts.XAxis, { dataKey: 'name' }),
+                  _react2.default.createElement(_recharts.YAxis, null),
+                  _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
+                  _react2.default.createElement(_recharts.Tooltip, null),
+                  _react2.default.createElement(_recharts.Legend, null),
+                  _react2.default.createElement(_recharts.Bar, { dataKey: 'value', fill: '#E74C3C' })
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-lg-6' },
+          _react2.default.createElement(
+            _Panel2.default,
+            { header: _react2.default.createElement(
+                'span',
+                null,
+                'Session duration'
+              ) },
+            _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement(
+                _recharts.ResponsiveContainer,
+                { width: '100%', aspect: 2 },
+                _react2.default.createElement(
+                  _recharts.PieChart,
+                  null,
+                  _react2.default.createElement(_recharts.Pie, { isAnimationActive: true, data: sessionDurationChartData, fill: ' #007acc', label: true }),
+                  _react2.default.createElement(_recharts.Tooltip, null)
+                )
+              )
+            )
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-lg-12' },
+            _react2.default.createElement(
+              _Panel2.default,
+              { header: _react2.default.createElement(
+                  'span',
+                  null,
+                  'Ips by country'
+                ) },
+              _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                  _recharts.ResponsiveContainer,
+                  { width: '100%', aspect: 2 },
+                  _react2.default.createElement(
+                    _recharts.PieChart,
+                    null,
+                    _react2.default.createElement(_recharts.Pie, { isAnimationActive: true, data: ipsByCountrryChartData, fill: '#58D68D', label: true }),
+                    _react2.default.createElement(_recharts.Tooltip, null)
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    );
+  }
+  
+  displayFlotCharts.contextTypes = { setTitle: _react.PropTypes.func.isRequired };
+  
+  exports.default = displayFlotCharts;
+
+/***/ }),
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 

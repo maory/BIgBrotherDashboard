@@ -10,20 +10,6 @@ import {
 
 const title = 'Flot Charts';
 
-/* function plotData() {
-  const data = [];
-  const offset = 0;
-  let sineValue;
-  let cosValue;
-  for (let i = 0; i < 12; i += 0.8) {
-    sineValue = Math.sin(i + offset);
-    cosValue = Math.cos(i + offset);
-    data.push({ name: i, sine: sineValue, cosine: cosValue });
-    // data.push({ name: i, cosine: cosValue });
-  }
-  return data;
-}
- */
 const lineChartData = [
   { name: '00:00', data: 1200 },
   { name: '01:00', data: 1200 },
@@ -49,7 +35,7 @@ const lineChartData = [
   { name: '21:00', data: 1200 },
   { name: '22:00', data: 1200 },
   { name: '23:00', data: 1200 },
-];//plotData();
+];
 
 const serviceChartData = [
   { name: 'ssl', value: 1123 }, 
