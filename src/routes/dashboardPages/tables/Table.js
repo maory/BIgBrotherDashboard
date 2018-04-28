@@ -5,12 +5,42 @@ import Panel from 'react-bootstrap/lib/Panel';
 import Pagination from 'react-bootstrap/lib/Pagination';
 import PageHeader from 'react-bootstrap/lib/PageHeader';
 import Well from 'react-bootstrap/lib/Well';
+import data from './conn.log.js'
 
 
 const title = 'Table';
 
+const columns = ["Origin IP", "Origin Port", "Destination IP", "Destination port", ];
+const options = {
+  filterType: 'checkbox',
+};
+
+const config = {
+  style: 'pure',
+  cols: [
+      { property: "idOrig_h" , header: "Origin IP"  },
+      { property: "idOrig_p" , header: "Origin Port"  },
+      { property: "idResp_h" , header: "Destination IP"  },
+      { property: "idResp_p" , header: "Destination Port"  },
+      { property: "proto" , header: "Protocol"  },
+      { property: "service" , header: "service"  },
+      
+  ]
+}
 function displayTable(props, context) {
+
+  var items = data.map(function(item){return (<tr> 
+    <td>{item.idOrig_h}</td>
+    <td>{item.idOrig_p}</td>
+    <td>{item.idResp_h}</td>
+    <td>{item.idResp_p}</td>
+    <td>{item.proto}</td>
+    <td>{item.service}</td>
+  </tr>)})
+
   context.setTitle(title);
+
+  
   return (
     <div>
       <div className="col-lg-12">
@@ -80,7 +110,7 @@ function displayTable(props, context) {
                             aria-sort="ascending"
                             style={{ width: 265 }}
                           >
-                          Rendering engine
+                          Origin Ip
                           </th>
                           <th
                             className="sorting"
@@ -91,7 +121,7 @@ function displayTable(props, context) {
                             aria-label="Browser: activate to sort column ascending"
                             style={{ width: 321 }}
                           >
-                          Browser
+                          Origin Port
                           </th>
                           <th
                             className="sorting"
@@ -102,7 +132,7 @@ function displayTable(props, context) {
                             aria-label="Platform(s): activate to sort column ascending"
                             style={{ width: 299 }}
                           >
-                          Platform(s)
+                          Destination IP
                           </th>
                           <th
                             className="sorting"
@@ -113,7 +143,7 @@ function displayTable(props, context) {
                             aria-label="Engine version: activate to sort column ascending"
                             style={{ width: 231 }}
                           >
-                          Engine version
+                          Destination Port
                           </th>
                           <th
                             className="sorting"
@@ -123,81 +153,22 @@ function displayTable(props, context) {
                             colSpan="1"
                             aria-label="CSS grade: activate to sort column ascending"
                             style={{ width: 180 }}
-                          >CSS grade
+                          >Protocol
+                          </th>
+                          <th
+                            className="sorting"
+                            tabIndex="0"
+                            aria-controls="dataTables-example"
+                            rowSpan="1"
+                            colSpan="1"
+                            aria-label="CSS grade: activate to sort column ascending"
+                            style={{ width: 180 }}
+                          >Service
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="gradeA odd" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Firefox 1.0</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td className="center">1.7</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA even" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Firefox 1.5</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td className="center">1.8</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA odd" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Firefox 2.0</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td className="center">1.8</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA even" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Firefox 3.0</td>
-                          <td>Win 2k+ / OSX.3+</td>
-                          <td className="center">1.9</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA odd" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Camino 1.0</td>
-                          <td>OSX.2+</td>
-                          <td className="center">1.8</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA even" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Camino 1.5</td>
-                          <td>OSX.3+</td>
-                          <td className="center">1.8</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA odd" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Netscape 7.2</td>
-                          <td>Win 95+ / Mac OS 8.6-9.2</td>
-                          <td className="center">1.7</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA even" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Netscape Browser 8</td>
-                          <td>Win 98SE+</td>
-                          <td className="center">1.7</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA odd" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Netscape Navigator 9</td>
-                          <td>Win 98+ / OSX.2+</td>
-                          <td className="center">1.8</td>
-                          <td className="center">A</td>
-                        </tr>
-                        <tr className="gradeA even" role="row">
-                          <td className="sorting_1">Gecko</td>
-                          <td>Mozilla 1.0</td>
-                          <td>Win 95+ / OSX.1+</td>
-                          <td className="center">1</td>
-                          <td className="center">A</td>
-                        </tr>
+                        {items}
                       </tbody>
                     </table>
                   </div>
@@ -254,6 +225,7 @@ function displayTable(props, context) {
                     <th># </th>
                     <th>First Name </th>
                     <th>Last Name </th>
+                    <th>Username </th>
                     <th>Username </th>
                   </tr>
                 </thead>

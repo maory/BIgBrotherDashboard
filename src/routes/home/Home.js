@@ -265,6 +265,15 @@ function Home(props, context) {
             <Button block>View All Events</Button>
           </Panel>
 
+         {/*  <Panel
+            header={<span>
+              <i className="fa fa-bar-chart-o fa-fw" /> Donut Chart Example
+            </span>}
+          >
+            <div>
+              <Donut data={data} color="#8884d8" innerRadius="70%" outerRadius="90%" />
+            </div>
+          </Panel> */}
 
         </div>
 
