@@ -11,13 +11,28 @@ import {
   import BasicMap from '../../../components/Map/Map'
 
 const title = 'Flot Charts';
-var lineChartData = plotData();
+var lineChartData = plotDataHoursData();
+var serviceTypeData = plotServiceTypeData();
+var protocolChartData = plotProtocolTypeData();
 
-function plotData() {
+function plotDataHoursData() {
   return fetch('/getLineChartData')
     .then(response => response.json())
     .then(data => lineChartData = data);
 }
+
+function plotServiceTypeData() {
+  return fetch('/getServiceTypeData')
+    .then(response => response.json())
+    .then(data => serviceTypeData = data);
+}
+
+function plotProtocolTypeData() {
+  return fetch('/getProtocolTypeData')
+    .then(response => response.json())
+    .then(data => protocolChartData = data);
+}
+
 
 /*const lineChartData = [
   { name: '00:00', data: 1200 },
@@ -46,13 +61,13 @@ function plotData() {
   { name: '23:00', data: 1200 },
 ];//plotData();
 */
-
+/*
 const serviceChartData = [
   { name: 'ssl', value: 1123 },
   { name: 'none', value: 346 },
   { name: 'http', value: 9876 },
 ];
-
+*/
 const sessionDurationChartData = [
   { name: '0.5-1 sec', value: 1123 },
   { name: '1-1.5 sec', value: 1432 },
@@ -60,13 +75,13 @@ const sessionDurationChartData = [
   { name: '1.5-2 sec', value: 653 },
   { name: '>2 sec', value: 94 },
 ];
-
+/*
 const protocolChartData = [
   { name: 'TCP', count: 400 },
   { name: 'UDP', count: 200 },
   { name: 'ICMP', count: 100 },
 ];
-
+*/
 const bytesStatisticChartData = [
   { name: 'Originator payload bytes ', value: 9374521 },
   { name: 'Responder payload bytes', value: 5316423 },
@@ -82,7 +97,7 @@ const ipsByCountrryChartData = [
 ];
 
 function displayFlotCharts(props, context) {
-  plotData();
+  plotDataHoursData();
   context.setTitle(title);
   return (
     <div>
@@ -115,15 +130,14 @@ function displayFlotCharts(props, context) {
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
                 <BarChart
-                  data={serviceChartData}
-                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-                >
+                  data={serviceTypeData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }} >
                   <XAxis dataKey="name" />
                   <YAxis />
                   <CartesianGrid strokeDasharray="3 3" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="value" fill="#88cc00" />
+                  <Bar dataKey="data" fill="#88cc00" />
                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
@@ -143,7 +157,7 @@ function displayFlotCharts(props, context) {
                   <CartesianGrid strokeDasharray="3 3" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="count" fill="#8884d8" />
+                  <Bar dataKey="data" fill="#8884d8" />
                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>

@@ -67,7 +67,7 @@ app.get('/getLineChartData', (req, res) => {
       value: logData.orig_bytes
     };
   });
-
+  
   var groupedByData = {};
 
   specificData.forEach(function (obj) {
@@ -76,6 +76,52 @@ app.get('/getLineChartData', (req, res) => {
     }
 
     groupedByData[obj.key] += parseInt(obj.value);
+  });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+// gil
+app.get('/getServiceTypeData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return {
+      key:logData.service,
+      value: 1
+    };
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+
+    groupedByData[obj.key] += 1;
+  });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+// gil
+app.get('/getProtocolTypeData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return {
+      key:logData.proto,
+      value: 1
+    };
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+
+    groupedByData[obj.key] += 1;
   });
 
   res.send(keyValueToGraph(groupedByData));
