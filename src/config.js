@@ -46,3 +46,11 @@ export const auth = {
   },
 
 };
+
+export const connLogParseConfig = {
+  delimiter: '\t',	// auto-detect
+  newline: '\n',	// auto-detect
+  header: true,
+  trimHeader: true,
+  skipEmptyLines: true,
+};

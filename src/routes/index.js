@@ -27,6 +27,7 @@ import blank from './dashboardPages/blank';
 import error from './error';
 
 import Header from '../components/Header';
+// import connectionService from '../controllers/firstcontroller';
 
 export default [
 
@@ -48,7 +49,7 @@ export default [
   {
     path: '/',
 
-  // keep in mind, routes are evaluated in order
+    // keep in mind, routes are evaluated in order
     children: [
       home,
       // contact,
