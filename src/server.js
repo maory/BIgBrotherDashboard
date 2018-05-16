@@ -4,23 +4,22 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressJwt from 'express-jwt';
-// import expressGraphQL from 'express-graphql';
-// import jwt from 'jsonwebtoken';
 import React from 'react';
+import groupBy from 'group-by';
+import moment from 'moment'
 import ReactDOM from 'react-dom/server';
 import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
+import * as Papa from 'papaparse';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
-// import passport from './core/passport';
-// import models from './data/models';
-// import schema from './data/schema';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
-import { port, auth } from './config';
+import { port, auth, connLogParseConfig } from './config';
 
 const app = express();
+const fs = require('fs');
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -45,6 +44,50 @@ app.use(expressJwt({
   credentialsRequired: false,
   getToken: req => req.cookies.id_token,
 }));
+
+function getConnData() {
+  let data = fs.readFileSync('./json/conn.log', 'utf-8');
+  let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
+  let parsed = Papa.parse(seperatedString, connLogParseConfig);
+  return parsed.data;
+}
+
+app.get('/getConn', (req, res) => {
+  // const data = { message: 'Hello' };
+  res.send(getConnData());
+});
+
+app.get('/getLineChartData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    let dateTime = moment.unix(parseInt(logData.ts));
+    return {
+      key: dateTime.format('hh:mm:ss'),
+      value: logData.orig_bytes
+    };
+  });
+
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+
+    groupedByData[obj.key] += parseInt(obj.value);
+  });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+function keyValueToGraph(dictionary) {
+  var array = [];
+  for (var key in dictionary) {
+    array.push({ name: key, data: dictionary[key] });
+  }
+
+  return array;
+}
 
 // app.use(passport.initialize());
 //
