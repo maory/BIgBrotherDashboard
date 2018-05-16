@@ -57,6 +57,7 @@ app.get('/getConn', (req, res) => {
   res.send(getConnData());
 });
 
+
 app.get('/getLineChartData', (req, res) => {
   let data = getConnData();
   let specificData = data.map(function (logData) {
