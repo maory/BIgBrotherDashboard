@@ -60,26 +60,60 @@ app.get('/getConn', (req, res) => {
 
 app.get('/getLineChartData', (req, res) => {
   let data = getConnData();
-  let specificData = data.map(function (logData) {
-    let dateTime = moment.unix(parseInt(logData.ts));
-    return {
-      key: dateTime.format('hh:mm:ss'),
-      value: logData.orig_bytes
-    };
-  });
+  let groupedByData = groupByValueFunc(data.map(mapToTimeAndBytes), sum);
 
+  res.send(keyValueToGraph(groupedByData));
+});
+
+app.get('/getSessionDurationData', (req, res) => {
+  let data = getConnData();
+
+  // TODO : Should Come from config file or from client side ??
+  let durationGroups = [0,0.5,1,1.5,2];
+  let mappedData = data.map(log=> log.duration);
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+function mapToTimeAndBytes(logData) {
+  let dateTime = moment.unix(parseInt(logData.ts));
+
+  return {
+    key: dateTime.format('hh:mm:ss'),
+    value: logData.orig_bytes
+  };
+}
+
+function mapToTimeAndBytes(logData) {
+  let dateTime = moment.unix(parseInt(logData.ts));
+
+  return {
+    key: dateTime.format('hh:mm:ss'),
+    value: logData.orig_bytes
+  };
+}
+
+function groupByValueFunc(data, groupByFunc) {
   var groupedByData = {};
 
-  specificData.forEach(function (obj) {
+  data.forEach(function (obj) {
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
 
-    groupedByData[obj.key] += parseInt(obj.value);
+    groupByFunc(groupedByData, obj);
   });
 
-  res.send(keyValueToGraph(groupedByData));
-});
+  return groupedByData;
+}
+
+function sum(groupedByData, obj) {
+  groupedByData[obj.key] += parseInt(obj.value);
+}
+
+function count(groupedByData, obj) {
+  groupedByData[obj.key]++;
+}
 
 function keyValueToGraph(dictionary) {
   var array = [];
