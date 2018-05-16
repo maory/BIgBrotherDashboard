@@ -7,8 +7,8 @@ import {
   LineChart, Tooltip, PieChart, Pie,
   Line, XAxis, YAxis, Legend,
   CartesianGrid, Bar, BarChart,
-  ResponsiveContainer
-} from '../../../vendor/recharts';
+  ResponsiveContainer } from '../../../vendor/recharts';
+  import BasicMap from '../../../components/Map/Map'
 
 const title = 'Flot Charts';
 var lineChartData = plotData();
@@ -102,7 +102,7 @@ function displayFlotCharts(props, context) {
                   <XAxis />
                   <YAxis />
                   <Tooltip />
-                  <Line type="data" dataKey="data" stroke="#82ca9d" />
+                  <Line type="data"  dataKey="data" stroke="#82ca9d" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -110,7 +110,7 @@ function displayFlotCharts(props, context) {
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-6">
+       <div className="col-lg-6">
           <Panel header={<span>Service type</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
@@ -124,7 +124,7 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="value" fill="#88cc00" />
-                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -144,16 +144,16 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
-                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
-      </div>
+        </div>
 
       <div className="row">
-        <div className="col-lg-6">
+       <div className="col-lg-6">
           <Panel header={<span>Bytes statistic (24h)</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
@@ -167,19 +167,19 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="value" fill="#E74C3C" />
-                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
-
+      
         <div className="col-lg-6">
           <Panel header={<span>Session duration</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
                 <PieChart >
-                  <Pie isAnimationActive={true} data={sessionDurationChartData} fill=" #007acc" label />
+                  <Pie isAnimationActive={true} data={sessionDurationChartData} fill=" #007acc" label  />
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
@@ -188,20 +188,26 @@ function displayFlotCharts(props, context) {
         </div>
 
         <div className="row">
+        <div className="col-lg-12">
+          <Panel header={<span>Ips by country</span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+            <BasicMap />
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+        </div>
+        </div>
+       
+          {/* 
+         <div className="row">
           <div className="col-lg-12">
-            <Panel header={<span>Ips by country</span>} >
-              <div>
-                <ResponsiveContainer width="100%" aspect={2}>
-                  <PieChart >
-                    <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label />
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </Panel>
+                <PieChart >
+                  <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label  />
+                  <Tooltip />
+                </PieChart>
           </div>
         </div>
-        {/* 
         <div className="col-lg-6">
           <Panel header={<span>Multiple Axes Line Chart Example</span>} >
             <div>
@@ -209,7 +215,6 @@ function displayFlotCharts(props, context) {
             </div>
           </Panel>
         </div>
-
         <div className="col-lg-6">
           <Panel header={<span>Moving Line Chart Example</span>} >
             <div>
@@ -217,7 +222,6 @@ function displayFlotCharts(props, context) {
             </div>
           </Panel>
         </div>
-
         <div className="col-lg-12">
           <Panel header={<span>Flot Charts Usage</span>} >
             <div>
@@ -235,8 +239,8 @@ function displayFlotCharts(props, context) {
           </Panel>
         </div>
 */}
-      </div>
     </div>
+    </div >
   );
 }
 
