@@ -7,6 +7,7 @@ import {
   Line, XAxis, YAxis, Legend,
   CartesianGrid, Bar, BarChart,
   ResponsiveContainer } from '../../../vendor/recharts';
+  import BasicMap from '../../../components/Map/Map'
 
 const title = 'Flot Charts';
 
@@ -195,16 +196,23 @@ function displayFlotCharts(props, context) {
           <Panel header={<span>Ips by country</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
-                <PieChart >
-                  <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label  />
-                  <Tooltip />
-                </PieChart>
+            <BasicMap />
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
         </div>
-{/* 
+       
+          {/* 
+
+         <div className="row">
+          <div className="col-lg-12">
+                <PieChart >
+                  <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label  />
+                  <Tooltip />
+                </PieChart>
+          </div>
+        </div>
         <div className="col-lg-6">
           <Panel header={<span>Multiple Axes Line Chart Example</span>} >
             <div>
