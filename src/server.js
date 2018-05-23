@@ -53,33 +53,72 @@ function getConnData() {
 }
 
 app.get('/getConn', (req, res) => {
-  // const data = { message: 'Hello' };
   res.send(getConnData());
 });
 
 
 app.get('/getLineChartData', (req, res) => {
   let data = getConnData();
-  let specificData = data.map(function (logData) {
-    let dateTime = moment.unix(parseInt(logData.ts));
-    return {
-      key: dateTime.format('hh:mm:ss'),
-      value: logData.orig_bytes
-    };
+  let groupedByData = groupByValueFunc(data.map(mapToTimeAndBytes), sum);
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+app.get('/getSessionDurationData', (req, res) => {
+  let data = getConnData();
+
+  // TODO : Should Come from config file or from client side ??
+  let durationRanges = [0, , 0.1, 0.25, 0.5, 1, 1.5, 2, 5, 7, 12, 9999];
+
+  let mappedData = data.map(log => log.duration);
+  let groupedByDurations = {};
+  data.forEach(log => {
+    for (var i = 0; i < durationRanges.length - 1; i++) {
+      if (durationRanges[i] < log.duration && log.duration <= durationRanges[i + 1]) {
+        const range = durationRanges[i] + '-' + durationRanges[i + 1];
+
+        if (!(range in groupedByDurations)) {
+          groupedByDurations[range] = 0;
+        }
+
+        groupedByDurations[range]++;
+      }
+    }
   });
-  
+
+  res.send(keyValueToPieChart(groupedByDurations));
+});
+
+function mapToTimeAndBytes(logData) {
+  let dateTime = moment.unix(parseInt(logData.ts));
+
+  return {
+    key: dateTime.format('hh:mm:ss'),
+    value: logData.orig_bytes
+  };
+}
+
+function groupByValueFunc(data, groupByFunc) {
   var groupedByData = {};
 
-  specificData.forEach(function (obj) {
+  data.forEach(function (obj) {
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
 
-    groupedByData[obj.key] += parseInt(obj.value);
+    groupByFunc(groupedByData, obj);
   });
 
-  res.send(keyValueToGraph(groupedByData));
-});
+  return groupedByData;
+}
+
+function sum(groupedByData, obj) {
+  groupedByData[obj.key] += parseInt(obj.value);
+}
+
+function count(groupedByData, obj) {
+  groupedByData[obj.key]++;
+}
 
 // gil
 app.get('/getServiceTypeData', (req, res) => {
@@ -194,12 +233,21 @@ function keyValueToGraph(dictionary) {
   return array;
 }
 
+
  function getCountryName (countryCode) {
   if (isoCountries.hasOwnProperty(countryCode)) {
       return isoCountries[countryCode];
   } else {
       return countryCode;
+  }}
+
+function keyValueToPieChart(dictionary) {
+  var array = [];
+  for (var key in dictionary) {
+    array.push({ name: key, value: dictionary[key] });
   }
+
+  return array;
 }
 
 // app.use(passport.initialize());
