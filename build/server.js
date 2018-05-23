@@ -219,7 +219,6 @@ module.exports =
       if (groupedByData[obj.key] === undefined) {
         groupedByData[obj.key] = 0;
       }
-  
       groupedByData[obj.key] += 1;
     });
   
@@ -244,6 +243,37 @@ module.exports =
       }
   
       groupedByData[obj.key] += 1;
+    });
+  
+    res.send(keyValueToGraph(groupedByData));
+  });
+  
+  // gil
+  app.get('/getBytesStatisticData', function (req, res) {
+    var data = getConnData();
+    var specificData = data.map(function (logData) {
+      return [{
+        key: 'Originator payload',
+        value: logData.orig_bytes
+      }, {
+        key: 'Responder payload',
+        value: logData.resp_bytes
+      }, {
+        key: 'Missing',
+        value: logData.missed_bytes
+      }];
+    });
+  
+    var groupedByData = {};
+  
+    specificData.forEach(function (obj) {
+      obj.forEach(function (obj) {
+        if (groupedByData[obj.key] === undefined) {
+          groupedByData[obj.key] = 0;
+        }
+  
+        if (!isNaN(obj.value)) groupedByData[obj.key] += parseInt(obj.value);
+      });
     });
   
     res.send(keyValueToGraph(groupedByData));
@@ -37297,6 +37327,7 @@ module.exports =
   var lineChartData = plotDataHoursData();
   var serviceTypeData = plotServiceTypeData();
   var protocolChartData = plotProtocolTypeData();
+  var bytesStatisticChartData = plotBytesStatisticChartData();
   
   function plotDataHoursData() {
     return (0, _isomorphicFetch2.default)('/getLineChartData').then(function (response) {
@@ -37319,6 +37350,13 @@ module.exports =
       return response.json();
     }).then(function (data) {
       return protocolChartData = data;
+    });
+  }
+  function plotBytesStatisticChartData() {
+    return (0, _isomorphicFetch2.default)('/getBytesStatisticData').then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      return bytesStatisticChartData = data;
     });
   }
   
@@ -37364,8 +37402,12 @@ module.exports =
     { name: 'ICMP', count: 100 },
   ];
   */
-  var bytesStatisticChartData = [{ name: 'Originator payload bytes ', value: 9374521 }, { name: 'Responder payload bytes', value: 5316423 }, { name: 'Missing bytes', value: 16354 }];
-  
+  /*const bytesStatisticChartData = [
+    { name: 'Originator payload bytes ', value: 9374521 },
+    { name: 'Responder payload bytes', value: 5316423 },
+    { name: 'Missing bytes', value: 16354 },
+  ];
+  */
   var ipsByCountrryChartData = [{ name: 'Viatnam', value: 1123 }, { name: 'Israel', value: 1432 }, { name: 'Iran', value: 3654 }, { name: 'Russia', value: 653 }, { name: 'Lebanon', value: 94 }];
   
   function displayFlotCharts(props, context) {
@@ -37519,7 +37561,7 @@ module.exports =
                   _react2.default.createElement(_recharts.CartesianGrid, { strokeDasharray: '3 3' }),
                   _react2.default.createElement(_recharts.Tooltip, null),
                   _react2.default.createElement(_recharts.Legend, null),
-                  _react2.default.createElement(_recharts.Bar, { dataKey: 'value', fill: '#E74C3C' })
+                  _react2.default.createElement(_recharts.Bar, { dataKey: 'data', fill: '#E74C3C' })
                 )
               )
             )

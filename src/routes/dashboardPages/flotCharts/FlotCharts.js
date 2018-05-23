@@ -14,6 +14,7 @@ const title = 'Flot Charts';
 var lineChartData = plotDataHoursData();
 var serviceTypeData = plotServiceTypeData();
 var protocolChartData = plotProtocolTypeData();
+var bytesStatisticChartData = plotBytesStatisticChartData();
 
 function plotDataHoursData() {
   return fetch('/getLineChartData')
@@ -31,6 +32,11 @@ function plotProtocolTypeData() {
   return fetch('/getProtocolTypeData')
     .then(response => response.json())
     .then(data => protocolChartData = data);
+}
+function plotBytesStatisticChartData() {
+  return fetch('/getBytesStatisticData')
+    .then(response => response.json())
+    .then(data => bytesStatisticChartData = data);
 }
 
 
@@ -82,12 +88,12 @@ const protocolChartData = [
   { name: 'ICMP', count: 100 },
 ];
 */
-const bytesStatisticChartData = [
+/*const bytesStatisticChartData = [
   { name: 'Originator payload bytes ', value: 9374521 },
   { name: 'Responder payload bytes', value: 5316423 },
   { name: 'Missing bytes', value: 16354 },
 ];
-
+*/
 const ipsByCountrryChartData = [
   { name: 'Viatnam', value: 1123 },
   { name: 'Israel', value: 1432 },
@@ -180,7 +186,7 @@ function displayFlotCharts(props, context) {
                   <CartesianGrid strokeDasharray="3 3" />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="value" fill="#E74C3C" />
+                  <Bar dataKey="data" fill="#E74C3C" />
                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
@@ -206,7 +212,7 @@ function displayFlotCharts(props, context) {
           <Panel header={<span>Ips by country</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
-            <BasicMap />
+            <BasicMap/>
               </ResponsiveContainer>
             </div>
           </Panel>

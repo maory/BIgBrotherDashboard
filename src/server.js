@@ -97,7 +97,6 @@ app.get('/getServiceTypeData', (req, res) => {
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
-
     groupedByData[obj.key] += 1;
   });
 
@@ -126,6 +125,43 @@ app.get('/getProtocolTypeData', (req, res) => {
 
   res.send(keyValueToGraph(groupedByData));
 });
+
+// gil
+app.get('/getBytesStatisticData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return [{
+      key:'Originator payload',
+      value: logData.orig_bytes,
+    },{
+      key:'Responder payload',
+      value: logData.resp_bytes
+    },{
+      key:'Missing',
+      value: logData.missed_bytes
+    }];
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    obj.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+ 
+    if (!isNaN(obj.value))
+      groupedByData[obj.key] +=  parseInt(obj.value);
+    });
+   });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+
+
+
+
 
 function keyValueToGraph(dictionary) {
   var array = [];
