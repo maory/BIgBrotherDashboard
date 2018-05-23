@@ -53,7 +53,6 @@ function getConnData() {
 }
 
 app.get('/getConn', (req, res) => {
-  // const data = { message: 'Hello' };
   res.send(getConnData());
 });
 
@@ -99,15 +98,6 @@ function mapToTimeAndBytes(logData) {
   };
 }
 
-function mapToTimeAndBytes(logData) {
-  let dateTime = moment.unix(parseInt(logData.ts));
-
-  return {
-    key: dateTime.format('hh:mm:ss'),
-    value: logData.orig_bytes
-  };
-}
-
 function groupByValueFunc(data, groupByFunc) {
   var groupedByData = {};
 
@@ -129,6 +119,88 @@ function sum(groupedByData, obj) {
 function count(groupedByData, obj) {
   groupedByData[obj.key]++;
 }
+
+// gil
+app.get('/getServiceTypeData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return {
+      key:logData.service,
+      value: 1
+    };
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+    groupedByData[obj.key] += 1;
+  });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+// gil
+app.get('/getProtocolTypeData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return {
+      key:logData.proto,
+      value: 1
+    };
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+
+    groupedByData[obj.key] += 1;
+  });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+// gil
+app.get('/getBytesStatisticData', (req, res) => {
+  let data = getConnData();
+  let specificData = data.map(function (logData) {
+    return [{
+      key:'Originator payload',
+      value: logData.orig_bytes,
+    },{
+      key:'Responder payload',
+      value: logData.resp_bytes
+    },{
+      key:'Missing',
+      value: logData.missed_bytes
+    }];
+  });
+  
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    obj.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+ 
+    if (!isNaN(obj.value))
+      groupedByData[obj.key] +=  parseInt(obj.value);
+    });
+   });
+
+  res.send(keyValueToGraph(groupedByData));
+});
+
+
+
+
+
 
 function keyValueToGraph(dictionary) {
   var array = [];

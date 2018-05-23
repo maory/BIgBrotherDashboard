@@ -62,14 +62,7 @@ class Sidebar extends Component {
                     Statistics
                   </a>
                 </li>
-                <li>
-                  <a
-                    href=""
-                    onClick={(e) => { e.preventDefault(); history.push('/morrisjscharts'); }}
-                  >
-                    Morrisjs Charts
-                  </a>
-                </li>
+            {/* - */}
               </ul>
             </li>
 
@@ -80,12 +73,12 @@ class Sidebar extends Component {
               </a>
             </li>
 
+              {/*
             <li>
               <a href="" onClick={(e) => { e.preventDefault(); history.push('/forms'); }} >
                 <i className="fa fa-table fa-fw" /> &nbsp;Forms
               </a>
             </li>
-
             <li className={classNames({ active: !this.state.uiElementsCollapsed })}>
               <a
                 href=""
@@ -139,7 +132,7 @@ class Sidebar extends Component {
                 </li>
               </ul>
             </li>
-
+ 
             <li className={classNames({ active: !this.state.multiLevelDropdownCollapsed })}>
               <a
                 href=""
@@ -203,7 +196,7 @@ class Sidebar extends Component {
                 </li>
               </ul>
             </li>
-
+          
             <li className={classNames({ active: !this.state.samplePagesCollapsed })}>
               <a
                 href=""
@@ -238,6 +231,8 @@ class Sidebar extends Component {
                 </li>
               </ul>
             </li>   
+
+            */}
           </ul>
         </div>
       </div>
