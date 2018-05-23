@@ -20,6 +20,12 @@ class BasicMap extends Component {
       ReactTooltip.rebuild()
     }, 100)
   }
+  constructor(props) {
+    super(props);
+    this.mapData = {
+      data: '',
+    };}
+
   render() {
     return (
       <div style={wrapperStyles}>
@@ -35,7 +41,7 @@ class BasicMap extends Component {
           }}
           >
           <ZoomableGroup center={[0,20]} disablePanning>
-            <Geographies geography={data}>
+            <Geographies geography={this.props.mapData}>
               {(geographies, projection) => geographies.map((geography, i) => geography.id !== "ATA" && (
                 <Geography
                   key={i}

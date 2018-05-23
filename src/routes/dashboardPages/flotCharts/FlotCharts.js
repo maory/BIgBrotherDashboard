@@ -8,7 +8,8 @@ import {
   Line, XAxis, YAxis, Legend,
   CartesianGrid, Bar, BarChart,
   ResponsiveContainer } from '../../../vendor/recharts';
-  import BasicMap from '../../../components/Map/Map'
+  import BasicMap from '../../../components/Map/Map';
+  import mapDataJson from '../../../components/Map/world50m';
 
 const title = 'Flot Charts';
 var lineChartData = plotDataHoursData();
@@ -212,7 +213,7 @@ function displayFlotCharts(props, context) {
           <Panel header={<span>Ips by country</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
-            <BasicMap/>
+            <BasicMap mapData={mapDataJson}/>
               </ResponsiveContainer>
             </div>
           </Panel>

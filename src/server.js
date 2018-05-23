@@ -16,7 +16,7 @@ import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
-import { port, auth, connLogParseConfig } from './config';
+import { port, auth, connLogParseConfig, isoCountries } from './config';
 
 const app = express();
 const fs = require('fs');
@@ -46,9 +46,9 @@ app.use(expressJwt({
 }));
 
 function getConnData() {
-  let data = fs.readFileSync('./json/conn.log', 'utf-8');
+  let data = fs.readFileSync('./json/conn2.log', 'utf-8');
   let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
-  let parsed = Papa.parse(seperatedString, connLogParseConfig);
+  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm,""), connLogParseConfig);
   return parsed.data;
 }
 
@@ -158,7 +158,29 @@ app.get('/getBytesStatisticData', (req, res) => {
   res.send(keyValueToGraph(groupedByData));
 });
 
+app.get('/getCountriesAmount', (req, res) => {
+  let data = getConnData();
+  console.log()
+  let specificData = data.map(function (logData) {
+    return {
+      key:logData.resp_cc,
+      value: 0,
+    }
+  });
 
+  console.warn(specificData);
+  var groupedByData = {};
+
+  specificData.forEach(function (obj) {
+    obj.key = getCountryName(obj.key);
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+
+    groupedByData[obj.key] += 1;
+  });
+
+  res.send(keyValueToGraph(groupedByData));});
 
 
 
@@ -170,6 +192,14 @@ function keyValueToGraph(dictionary) {
   }
 
   return array;
+}
+
+ function getCountryName (countryCode) {
+  if (isoCountries.hasOwnProperty(countryCode)) {
+      return isoCountries[countryCode];
+  } else {
+      return countryCode;
+  }
 }
 
 // app.use(passport.initialize());

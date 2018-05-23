@@ -169,9 +169,9 @@ module.exports =
   }));
   
   function getConnData() {
-    var data = fs.readFileSync('./json/conn.log', 'utf-8');
+    var data = fs.readFileSync('./json/conn2.log', 'utf-8');
     var seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
-    var parsed = Papa.parse(seperatedString, _config.connLogParseConfig);
+    var parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), _config.connLogParseConfig);
     return parsed.data;
   }
   
@@ -279,6 +279,31 @@ module.exports =
     res.send(keyValueToGraph(groupedByData));
   });
   
+  app.get('/getCountriesAmount', function (req, res) {
+    var data = getConnData();
+    console.log();
+    var specificData = data.map(function (logData) {
+      return {
+        key: logData.resp_cc,
+        value: 0
+      };
+    });
+  
+    console.warn(specificData);
+    var groupedByData = {};
+  
+    specificData.forEach(function (obj) {
+      obj.key = getCountryName(obj.key);
+      if (groupedByData[obj.key] === undefined) {
+        groupedByData[obj.key] = 0;
+      }
+  
+      groupedByData[obj.key] += 1;
+    });
+  
+    res.send(keyValueToGraph(groupedByData));
+  });
+  
   function keyValueToGraph(dictionary) {
     var array = [];
     for (var key in dictionary) {
@@ -286,6 +311,14 @@ module.exports =
     }
   
     return array;
+  }
+  
+  function getCountryName(countryCode) {
+    if (_config.isoCountries.hasOwnProperty(countryCode)) {
+      return _config.isoCountries[countryCode];
+    } else {
+      return countryCode;
+    }
   }
   
   // app.use(passport.initialize());
@@ -666,6 +699,254 @@ module.exports =
     header: true,
     trimHeader: true,
     skipEmptyLines: true
+  };
+  
+  var isoCountries = exports.isoCountries = {
+    'AF': 'Afghanistan',
+    'AX': 'Aland Islands',
+    'AL': 'Albania',
+    'DZ': 'Algeria',
+    'AS': 'American Samoa',
+    'AD': 'Andorra',
+    'AO': 'Angola',
+    'AI': 'Anguilla',
+    'AQ': 'Antarctica',
+    'AG': 'Antigua And Barbuda',
+    'AR': 'Argentina',
+    'AM': 'Armenia',
+    'AW': 'Aruba',
+    'AU': 'Australia',
+    'AT': 'Austria',
+    'AZ': 'Azerbaijan',
+    'BS': 'Bahamas',
+    'BH': 'Bahrain',
+    'BD': 'Bangladesh',
+    'BB': 'Barbados',
+    'BY': 'Belarus',
+    'BE': 'Belgium',
+    'BZ': 'Belize',
+    'BJ': 'Benin',
+    'BM': 'Bermuda',
+    'BT': 'Bhutan',
+    'BO': 'Bolivia',
+    'BA': 'Bosnia And Herzegovina',
+    'BW': 'Botswana',
+    'BV': 'Bouvet Island',
+    'BR': 'Brazil',
+    'IO': 'British Indian Ocean Territory',
+    'BN': 'Brunei Darussalam',
+    'BG': 'Bulgaria',
+    'BF': 'Burkina Faso',
+    'BI': 'Burundi',
+    'KH': 'Cambodia',
+    'CM': 'Cameroon',
+    'CA': 'Canada',
+    'CV': 'Cape Verde',
+    'KY': 'Cayman Islands',
+    'CF': 'Central African Republic',
+    'TD': 'Chad',
+    'CL': 'Chile',
+    'CN': 'China',
+    'CX': 'Christmas Island',
+    'CC': 'Cocos (Keeling) Islands',
+    'CO': 'Colombia',
+    'KM': 'Comoros',
+    'CG': 'Congo',
+    'CD': 'Congo, Democratic Republic',
+    'CK': 'Cook Islands',
+    'CR': 'Costa Rica',
+    'CI': 'Cote D\'Ivoire',
+    'HR': 'Croatia',
+    'CU': 'Cuba',
+    'CY': 'Cyprus',
+    'CZ': 'Czech Republic',
+    'DK': 'Denmark',
+    'DJ': 'Djibouti',
+    'DM': 'Dominica',
+    'DO': 'Dominican Republic',
+    'EC': 'Ecuador',
+    'EG': 'Egypt',
+    'SV': 'El Salvador',
+    'GQ': 'Equatorial Guinea',
+    'ER': 'Eritrea',
+    'EE': 'Estonia',
+    'ET': 'Ethiopia',
+    'FK': 'Falkland Islands (Malvinas)',
+    'FO': 'Faroe Islands',
+    'FJ': 'Fiji',
+    'FI': 'Finland',
+    'FR': 'France',
+    'GF': 'French Guiana',
+    'PF': 'French Polynesia',
+    'TF': 'French Southern Territories',
+    'GA': 'Gabon',
+    'GM': 'Gambia',
+    'GE': 'Georgia',
+    'DE': 'Germany',
+    'GH': 'Ghana',
+    'GI': 'Gibraltar',
+    'GR': 'Greece',
+    'GL': 'Greenland',
+    'GD': 'Grenada',
+    'GP': 'Guadeloupe',
+    'GU': 'Guam',
+    'GT': 'Guatemala',
+    'GG': 'Guernsey',
+    'GN': 'Guinea',
+    'GW': 'Guinea-Bissau',
+    'GY': 'Guyana',
+    'HT': 'Haiti',
+    'HM': 'Heard Island & Mcdonald Islands',
+    'VA': 'Holy See (Vatican City State)',
+    'HN': 'Honduras',
+    'HK': 'Hong Kong',
+    'HU': 'Hungary',
+    'IS': 'Iceland',
+    'IN': 'India',
+    'ID': 'Indonesia',
+    'IR': 'Iran, Islamic Republic Of',
+    'IQ': 'Iraq',
+    'IE': 'Ireland',
+    'IM': 'Isle Of Man',
+    'IL': 'Israel',
+    'IT': 'Italy',
+    'JM': 'Jamaica',
+    'JP': 'Japan',
+    'JE': 'Jersey',
+    'JO': 'Jordan',
+    'KZ': 'Kazakhstan',
+    'KE': 'Kenya',
+    'KI': 'Kiribati',
+    'KR': 'Korea',
+    'KW': 'Kuwait',
+    'KG': 'Kyrgyzstan',
+    'LA': 'Lao People\'s Democratic Republic',
+    'LV': 'Latvia',
+    'LB': 'Lebanon',
+    'LS': 'Lesotho',
+    'LR': 'Liberia',
+    'LY': 'Libyan Arab Jamahiriya',
+    'LI': 'Liechtenstein',
+    'LT': 'Lithuania',
+    'LU': 'Luxembourg',
+    'MO': 'Macao',
+    'MK': 'Macedonia',
+    'MG': 'Madagascar',
+    'MW': 'Malawi',
+    'MY': 'Malaysia',
+    'MV': 'Maldives',
+    'ML': 'Mali',
+    'MT': 'Malta',
+    'MH': 'Marshall Islands',
+    'MQ': 'Martinique',
+    'MR': 'Mauritania',
+    'MU': 'Mauritius',
+    'YT': 'Mayotte',
+    'MX': 'Mexico',
+    'FM': 'Micronesia, Federated States Of',
+    'MD': 'Moldova',
+    'MC': 'Monaco',
+    'MN': 'Mongolia',
+    'ME': 'Montenegro',
+    'MS': 'Montserrat',
+    'MA': 'Morocco',
+    'MZ': 'Mozambique',
+    'MM': 'Myanmar',
+    'NA': 'Namibia',
+    'NR': 'Nauru',
+    'NP': 'Nepal',
+    'NL': 'Netherlands',
+    'AN': 'Netherlands Antilles',
+    'NC': 'New Caledonia',
+    'NZ': 'New Zealand',
+    'NI': 'Nicaragua',
+    'NE': 'Niger',
+    'NG': 'Nigeria',
+    'NU': 'Niue',
+    'NF': 'Norfolk Island',
+    'MP': 'Northern Mariana Islands',
+    'NO': 'Norway',
+    'OM': 'Oman',
+    'PK': 'Pakistan',
+    'PW': 'Palau',
+    'PS': 'Palestinian Territory, Occupied',
+    'PA': 'Panama',
+    'PG': 'Papua New Guinea',
+    'PY': 'Paraguay',
+    'PE': 'Peru',
+    'PH': 'Philippines',
+    'PN': 'Pitcairn',
+    'PL': 'Poland',
+    'PT': 'Portugal',
+    'PR': 'Puerto Rico',
+    'QA': 'Qatar',
+    'RE': 'Reunion',
+    'RO': 'Romania',
+    'RU': 'Russian Federation',
+    'RW': 'Rwanda',
+    'BL': 'Saint Barthelemy',
+    'SH': 'Saint Helena',
+    'KN': 'Saint Kitts And Nevis',
+    'LC': 'Saint Lucia',
+    'MF': 'Saint Martin',
+    'PM': 'Saint Pierre And Miquelon',
+    'VC': 'Saint Vincent And Grenadines',
+    'WS': 'Samoa',
+    'SM': 'San Marino',
+    'ST': 'Sao Tome And Principe',
+    'SA': 'Saudi Arabia',
+    'SN': 'Senegal',
+    'RS': 'Serbia',
+    'SC': 'Seychelles',
+    'SL': 'Sierra Leone',
+    'SG': 'Singapore',
+    'SK': 'Slovakia',
+    'SI': 'Slovenia',
+    'SB': 'Solomon Islands',
+    'SO': 'Somalia',
+    'ZA': 'South Africa',
+    'GS': 'South Georgia And Sandwich Isl.',
+    'ES': 'Spain',
+    'LK': 'Sri Lanka',
+    'SD': 'Sudan',
+    'SR': 'Suriname',
+    'SJ': 'Svalbard And Jan Mayen',
+    'SZ': 'Swaziland',
+    'SE': 'Sweden',
+    'CH': 'Switzerland',
+    'SY': 'Syrian Arab Republic',
+    'TW': 'Taiwan',
+    'TJ': 'Tajikistan',
+    'TZ': 'Tanzania',
+    'TH': 'Thailand',
+    'TL': 'Timor-Leste',
+    'TG': 'Togo',
+    'TK': 'Tokelau',
+    'TO': 'Tonga',
+    'TT': 'Trinidad And Tobago',
+    'TN': 'Tunisia',
+    'TR': 'Turkey',
+    'TM': 'Turkmenistan',
+    'TC': 'Turks And Caicos Islands',
+    'TV': 'Tuvalu',
+    'UG': 'Uganda',
+    'UA': 'Ukraine',
+    'AE': 'United Arab Emirates',
+    'GB': 'United Kingdom',
+    'US': 'United States',
+    'UM': 'United States Outlying Islands',
+    'UY': 'Uruguay',
+    'UZ': 'Uzbekistan',
+    'VU': 'Vanuatu',
+    'VE': 'Venezuela',
+    'VN': 'Viet Nam',
+    'VG': 'Virgin Islands, British',
+    'VI': 'Virgin Islands, U.S.',
+    'WF': 'Wallis And Futuna',
+    'EH': 'Western Sahara',
+    'YE': 'Yemen',
+    'ZM': 'Zambia',
+    'ZW': 'Zimbabwe'
   };
 
 /***/ }),
@@ -37321,6 +37602,10 @@ module.exports =
   
   var _Map2 = _interopRequireDefault(_Map);
   
+  var _world50m = __webpack_require__(171);
+  
+  var _world50m2 = _interopRequireDefault(_world50m);
+  
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
   
   var title = 'Flot Charts';
@@ -37612,7 +37897,7 @@ module.exports =
                 _react2.default.createElement(
                   _recharts.ResponsiveContainer,
                   { width: '100%', aspect: 2 },
-                  _react2.default.createElement(_Map2.default, null)
+                  _react2.default.createElement(_Map2.default, { mapData: _world50m2.default })
                 )
               )
             )
@@ -37650,13 +37935,13 @@ module.exports =
   
   var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
   
-  var _createClass2 = __webpack_require__(34);
-  
-  var _createClass3 = _interopRequireDefault(_createClass2);
-  
   var _possibleConstructorReturn2 = __webpack_require__(35);
   
   var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+  
+  var _createClass2 = __webpack_require__(34);
+  
+  var _createClass3 = _interopRequireDefault(_createClass2);
   
   var _inherits2 = __webpack_require__(36);
   
@@ -37686,12 +37971,6 @@ module.exports =
   
   var BasicMap = function (_Component) {
     (0, _inherits3.default)(BasicMap, _Component);
-  
-    function BasicMap() {
-      (0, _classCallCheck3.default)(this, BasicMap);
-      return (0, _possibleConstructorReturn3.default)(this, (BasicMap.__proto__ || (0, _getPrototypeOf2.default)(BasicMap)).apply(this, arguments));
-    }
-  
     (0, _createClass3.default)(BasicMap, [{
       key: "componentDidMount",
       value: function componentDidMount() {
@@ -37699,7 +37978,19 @@ module.exports =
           _reactTooltip2.default.rebuild();
         }, 100);
       }
-    }, {
+    }]);
+  
+    function BasicMap(props) {
+      (0, _classCallCheck3.default)(this, BasicMap);
+  
+      var _this = (0, _possibleConstructorReturn3.default)(this, (BasicMap.__proto__ || (0, _getPrototypeOf2.default)(BasicMap)).call(this, props));
+  
+      _this.mapData = {
+        data: ''
+      };return _this;
+    }
+  
+    (0, _createClass3.default)(BasicMap, [{
       key: "render",
       value: function render() {
         return _react2.default.createElement(
@@ -37723,7 +38014,7 @@ module.exports =
               { center: [0, 20], disablePanning: true },
               _react2.default.createElement(
                 _reactSimpleMaps.Geographies,
-                { geography: _world50m2.default },
+                { geography: this.props.mapData },
                 function (geographies, projection) {
                   return geographies.map(function (geography, i) {
                     return geography.id !== "ATA" && _react2.default.createElement(_reactSimpleMaps.Geography, {
