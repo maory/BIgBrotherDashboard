@@ -69,7 +69,7 @@ app.get('/getSessionDurationData', (req, res) => {
   let data = getConnData();
 
   // TODO : Should Come from config file or from client side ??
-  let durationRanges = [0, 0.5, 1, 1.5, 2];
+  let durationRanges = [0, , 0.1, 0.25, 0.5, 1, 1.5, 2, 5, 7, 12, 9999];
 
   let mappedData = data.map(log => log.duration);
   let groupedByDurations = {};
@@ -87,7 +87,7 @@ app.get('/getSessionDurationData', (req, res) => {
     }
   });
 
-  res.send(keyValueToGraph(groupedByDurations));
+  res.send(keyValueToPieChart(groupedByDurations));
 });
 
 function mapToTimeAndBytes(logData) {
@@ -134,6 +134,15 @@ function keyValueToGraph(dictionary) {
   var array = [];
   for (var key in dictionary) {
     array.push({ name: key, data: dictionary[key] });
+  }
+
+  return array;
+}
+
+function keyValueToPieChart(dictionary) {
+  var array = [];
+  for (var key in dictionary) {
+    array.push({ name: key, value: dictionary[key] });
   }
 
   return array;

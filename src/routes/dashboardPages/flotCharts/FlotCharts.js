@@ -7,53 +7,22 @@ import {
   LineChart, Tooltip, PieChart, Pie,
   Line, XAxis, YAxis, Legend,
   CartesianGrid, Bar, BarChart,
-  ResponsiveContainer } from '../../../vendor/recharts';
-  import BasicMap from '../../../components/Map/Map'
+  ResponsiveContainer
+} from '../../../vendor/recharts';
+import BasicMap from '../../../components/Map/Map'
 
 const title = 'Flot Charts';
 var lineChartData = getLineChartData();
-var sessionDurationData = getSessionDurationData();
+var sessionDurationChartData = getSessionDurationData();
 
 function getSessionDurationData() {
-  return getDataFromServer('getSessionDurationData');
+    return fetch('/getSessionDurationData')
+      .then(response => response.json()).then(data=> sessionDurationChartData = data);
 }
 function getLineChartData() {
-  return getDataFromServer('getLineChartData');
+  return fetch('/getLineChartData')
+    .then(response => response.json()).then(data => lineChartData = data);
 }
-
-function getDataFromServer(method) {
-  return fetch('/' + method)
-    .then(response => response.json())
-    .then(data => lineChartData = data);
-}
-
-/*const lineChartData = [
-  { name: '00:00', data: 1200 },
-  { name: '01:00', data: 1200 },
-  { name: '02:00', data: 1200 },
-  { name: '03:00', data: 1200 },
-  { name: '04:00', data: 1200 },
-  { name: '05:00', data: 1300 },
-  { name: '06:00', data: 1350 },
-  { name: '07:00', data: 1578 },
-  { name: '08:00', data: 1907 },
-  { name: '09:00', data: 2657 },
-  { name: '10:00', data: 5679 },
-  { name: '11:00', data: 6743 },
-  { name: '12:00', data: 7532 },
-  { name: '13:00', data: 5786 },
-  { name: '14:00', data: 8535 },
-  { name: '15:00', data: 7535 },
-  { name: '16:00', data: 6542 },
-  { name: '17:00', data: 4675 },
-  { name: '18:00', data: 3242 },
-  { name: '19:00', data: 2356 },
-  { name: '20:00', data: 1567 },
-  { name: '21:00', data: 1200 },
-  { name: '22:00', data: 1200 },
-  { name: '23:00', data: 1200 },
-];//plotData();
-*/
 
 const serviceChartData = [
   { name: 'ssl', value: 1123 },
@@ -69,7 +38,7 @@ const sessionDurationChartData = [
   { name: '1.5-2 sec', value: 653 },
   { name: '>2 sec', value: 94 },
 ];
-*/
+*/  
 const protocolChartData = [
   { name: 'TCP', count: 400 },
   { name: 'UDP', count: 200 },
@@ -93,7 +62,6 @@ const ipsByCountrryChartData = [
 function displayFlotCharts(props, context) {
   getLineChartData();
   getSessionDurationData();
-  //var sessionDurationData = getSessionDurationData();
 
   context.setTitle(title);
   return (
@@ -114,7 +82,7 @@ function displayFlotCharts(props, context) {
                   <XAxis />
                   <YAxis />
                   <Tooltip />
-                  <Line type="data"  dataKey="data" stroke="#82ca9d" />
+                  <Line type="data" dataKey="data" stroke="#82ca9d" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -122,7 +90,7 @@ function displayFlotCharts(props, context) {
         </div>
       </div>
       <div className="row">
-       <div className="col-lg-6">
+        <div className="col-lg-6">
           <Panel header={<span>Service type</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
@@ -136,7 +104,7 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="value" fill="#88cc00" />
-                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -156,16 +124,16 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="count" fill="#8884d8" />
-                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
-        </div>
+      </div>
 
       <div className="row">
-       <div className="col-lg-6">
+        <div className="col-lg-6">
           <Panel header={<span>Bytes statistic (24h)</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
@@ -179,19 +147,19 @@ function displayFlotCharts(props, context) {
                   <Tooltip />
                   <Legend />
                   <Bar dataKey="value" fill="#E74C3C" />
-                 {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
                 </BarChart>
               </ResponsiveContainer>
             </div>
           </Panel>
         </div>
-      
+
         <div className="col-lg-6">
           <Panel header={<span>Session duration</span>} >
             <div>
               <ResponsiveContainer width="100%" aspect={2}>
                 <PieChart >
-                  <Pie isAnimationActive={true} data={sessionDurationChartData} fill=" #007acc" label  />
+                  <Pie isAnimationActive={true} data={sessionDurationChartData} fill=" #007acc" label />
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
@@ -200,59 +168,18 @@ function displayFlotCharts(props, context) {
         </div>
 
         <div className="row">
-        <div className="col-lg-12">
-          <Panel header={<span>Ips by country</span>} >
-            <div>
-              <ResponsiveContainer width="100%" aspect={2}>
-            <BasicMap />
-              </ResponsiveContainer>
-            </div>
-          </Panel>
-        </div>
-        </div>
-       
-          {/* 
-         <div className="row">
           <div className="col-lg-12">
-                <PieChart >
-                  <Pie isAnimationActive={true} data={ipsByCountrryChartData} fill="#58D68D" label  />
-                  <Tooltip />
-                </PieChart>
+            <Panel header={<span>Ips by country</span>} >
+              <div>
+                <ResponsiveContainer width="100%" aspect={2}>
+                  <BasicMap />
+                </ResponsiveContainer>
+              </div>
+            </Panel>
           </div>
         </div>
-        <div className="col-lg-6">
-          <Panel header={<span>Multiple Axes Line Chart Example</span>} >
-            <div>
-              Panel contents
-            </div>
-          </Panel>
-        </div>
-        <div className="col-lg-6">
-          <Panel header={<span>Moving Line Chart Example</span>} >
-            <div>
-              Panel contents
-            </div>
-          </Panel>
-        </div>
-        <div className="col-lg-12">
-          <Panel header={<span>Flot Charts Usage</span>} >
-            <div>
-              <p>Flot is a pure JavaScript plotting library for jQuery, with a focus on simple
-                usage, attractive looks, and interactive features. In SB Admin, we are using the
-                most recent version of Flot along with a few plugins to enhance the user
-                experience. The Flot plugins being used are the tooltip plugin for hoverable
-                tooltips, and the resize plugin for fully responsive charts. The documentation
-                for Flot Charts is available on their website,
-                <a target="_blank" rel="noopener noreferrer" href="http://www.flotcharts.org/">
-                  "http://www.flotcharts.org/"
-                </a>.</p>
-              <Button bsSize="large" block href="http://www.flotcharts.org/">View Flot Charts Documentation</Button>
-            </div>
-          </Panel>
-        </div>
-*/}
+      </div>
     </div>
-    </div >
   );
 }
 
