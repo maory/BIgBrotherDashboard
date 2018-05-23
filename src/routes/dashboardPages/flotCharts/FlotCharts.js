@@ -11,10 +11,18 @@ import {
   import BasicMap from '../../../components/Map/Map'
 
 const title = 'Flot Charts';
-var lineChartData = plotData();
+var lineChartData = getLineChartData();
+var sessionDurationData = getSessionDurationData();
 
-function plotData() {
-  return fetch('/getLineChartData')
+function getSessionDurationData() {
+  return getDataFromServer('getSessionDurationData');
+}
+function getLineChartData() {
+  return getDataFromServer('getLineChartData');
+}
+
+function getDataFromServer(method) {
+  return fetch('/' + method)
     .then(response => response.json())
     .then(data => lineChartData = data);
 }
@@ -53,6 +61,7 @@ const serviceChartData = [
   { name: 'http', value: 9876 },
 ];
 
+/*
 const sessionDurationChartData = [
   { name: '0.5-1 sec', value: 1123 },
   { name: '1-1.5 sec', value: 1432 },
@@ -60,7 +69,7 @@ const sessionDurationChartData = [
   { name: '1.5-2 sec', value: 653 },
   { name: '>2 sec', value: 94 },
 ];
-
+*/
 const protocolChartData = [
   { name: 'TCP', count: 400 },
   { name: 'UDP', count: 200 },
@@ -82,7 +91,10 @@ const ipsByCountrryChartData = [
 ];
 
 function displayFlotCharts(props, context) {
-  plotData();
+  getLineChartData();
+  getSessionDurationData();
+  //var sessionDurationData = getSessionDurationData();
+
   context.setTitle(title);
   return (
     <div>

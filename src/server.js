@@ -69,10 +69,25 @@ app.get('/getSessionDurationData', (req, res) => {
   let data = getConnData();
 
   // TODO : Should Come from config file or from client side ??
-  let durationGroups = [0,0.5,1,1.5,2];
-  let mappedData = data.map(log=> log.duration);
+  let durationRanges = [0, 0.5, 1, 1.5, 2];
 
-  res.send(keyValueToGraph(groupedByData));
+  let mappedData = data.map(log => log.duration);
+  let groupedByDurations = {};
+  data.forEach(log => {
+    for (var i = 0; i < durationRanges.length - 1; i++) {
+      if (durationRanges[i] < log.duration && log.duration <= durationRanges[i + 1]) {
+        const range = durationRanges[i] + '-' + durationRanges[i + 1];
+
+        if (!(range in groupedByDurations)) {
+          groupedByDurations[range] = 0;
+        }
+
+        groupedByDurations[range]++;
+      }
+    }
+  });
+
+  res.send(keyValueToGraph(groupedByDurations));
 });
 
 function mapToTimeAndBytes(logData) {
