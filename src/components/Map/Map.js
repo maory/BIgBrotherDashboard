@@ -6,7 +6,7 @@ import {
   Geography,
 } from "react-simple-maps"
  import ReactTooltip from "react-tooltip"
- import data from './world50m'
+/*  import data from './world50m' */
 
 const wrapperStyles = {
   width: "100%",

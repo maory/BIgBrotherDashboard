@@ -18,9 +18,11 @@ var lineChartData = plotDataHoursData();
 var serviceTypeData = plotServiceTypeData();
 var protocolChartData = plotProtocolTypeData();
 var bytesStatisticChartData = plotBytesStatisticChartData();
-var sessionDurationChartData = getSessionDurationData();
+var sessionDurationChartData = plotSessionDurationData();
+var worldmapIpConutData = plotCountriesData();
 
-function getSessionDurationData() {
+
+function plotSessionDurationData() {
   return fetch('/getSessionDurationData')
     .then(response => response.json())
     .then(data => sessionDurationChartData = data);
@@ -50,6 +52,12 @@ function plotBytesStatisticChartData() {
     .then(data => bytesStatisticChartData = data);
 }
 
+function plotCountriesData() {
+  return fetch('/getCountriesData')
+    .then(response => response.json())
+    .then(data => worldmapIpConutData = data);
+}
+
 
 function displayFlotCharts(props, context) {
 
@@ -57,7 +65,8 @@ function displayFlotCharts(props, context) {
   plotProtocolTypeData();
   plotServiceTypeData();
   plotDataHoursData();
-  getSessionDurationData();
+  plotSessionDurationData();
+  plotCountriesData();
 
   context.setTitle(title);
   return (
@@ -165,7 +174,7 @@ function displayFlotCharts(props, context) {
             <Panel header={<span>Ips by country</span>} >
               <div>
                 <ResponsiveContainer width="100%" aspect={2}>
-                  <BasicMap mapData={mapDataJson} />
+                  <BasicMap mapData={worldmapIpConutData} />
                 </ResponsiveContainer>
               </div>
             </Panel>

@@ -1,6 +1,4 @@
-import React from 'react';
-
-var mapjsdata ={
+{
     "arcs": [
         [
             [
@@ -99817,6 +99815,4 @@ var mapjsdata ={
             0.01736514657995801
         ]
     }
-};
-
-export default mapjsdata;
+}

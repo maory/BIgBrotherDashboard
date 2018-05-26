@@ -17,6 +17,7 @@ import errorPageStyle from './routes/error/ErrorPage.css';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth, connLogParseConfig, isoCountries } from './config';
+import mapData from './components/Map/world50m.json';
 
 const app = express();
 const fs = require('fs');
@@ -48,7 +49,7 @@ app.use(expressJwt({
 function getConnData() {
   let data = fs.readFileSync('./json/conn2.log', 'utf-8');
   let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
-  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm,""), connLogParseConfig);
+  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), connLogParseConfig);
   return parsed.data;
 }
 
@@ -125,11 +126,11 @@ app.get('/getServiceTypeData', (req, res) => {
   let data = getConnData();
   let specificData = data.map(function (logData) {
     return {
-      key:logData.service,
+      key: logData.service,
       value: 1
     };
   });
-  
+
   var groupedByData = {};
 
   specificData.forEach(function (obj) {
@@ -147,11 +148,11 @@ app.get('/getProtocolTypeData', (req, res) => {
   let data = getConnData();
   let specificData = data.map(function (logData) {
     return {
-      key:logData.proto,
+      key: logData.proto,
       value: 1
     };
   });
-  
+
   var groupedByData = {};
 
   specificData.forEach(function (obj) {
@@ -170,44 +171,70 @@ app.get('/getBytesStatisticData', (req, res) => {
   let data = getConnData();
   let specificData = data.map(function (logData) {
     return [{
-      key:'Originator payload',
+      key: 'Originator payload',
       value: logData.orig_bytes,
-    },{
-      key:'Responder payload',
+    }, {
+      key: 'Responder payload',
       value: logData.resp_bytes
-    },{
-      key:'Missing',
+    }, {
+      key: 'Missing',
       value: logData.missed_bytes
     }];
   });
-  
+
   var groupedByData = {};
 
   specificData.forEach(function (obj) {
     obj.forEach(function (obj) {
-    if (groupedByData[obj.key] === undefined) {
-      groupedByData[obj.key] = 0;
-    }
- 
-    if (!isNaN(obj.value))
-      groupedByData[obj.key] +=  parseInt(obj.value);
+      if (groupedByData[obj.key] === undefined) {
+        groupedByData[obj.key] = 0;
+      }
+
+      if (!isNaN(obj.value))
+        groupedByData[obj.key] += parseInt(obj.value);
     });
-   });
+  });
 
   res.send(keyValueToGraph(groupedByData));
 });
 
-app.get('/getCountriesAmount', (req, res) => {
+
+app.get('/getCountriesData', (req, res) => {
+  let countryEntriesAmount = getCountriesEntriesAmount();
+  let flag;
+
+  var colnedMapData = JSON.parse(JSON.stringify(mapData));
+
+  // Build map data
+  colnedMapData.objects.units.geometries.forEach(function (obj) {
+    flag = false;
+    for (var key in countryEntriesAmount) {
+      if (obj.properties.name.includes(key)) {
+        obj.properties.name = key + ': ' + countryEntriesAmount[key] + ' Visits';
+        flag = true;
+        break;
+      }
+    }
+
+    if (!flag) {
+      obj.properties.name += ': None visits'
+    }
+  }
+  );
+
+  //console.log(mapData.objects.units.geometries.map(x => x.properties.name));
+  res.send(colnedMapData);
+});
+
+function getCountriesEntriesAmount() {
   let data = getConnData();
-  console.log()
   let specificData = data.map(function (logData) {
     return {
-      key:logData.resp_cc,
+      key: logData.resp_cc,
       value: 0,
     }
   });
 
-  console.warn(specificData);
   var groupedByData = {};
 
   specificData.forEach(function (obj) {
@@ -219,10 +246,8 @@ app.get('/getCountriesAmount', (req, res) => {
     groupedByData[obj.key] += 1;
   });
 
-  res.send(keyValueToGraph(groupedByData));});
-
-
-
+  return groupedByData;
+}
 
 function keyValueToGraph(dictionary) {
   var array = [];
@@ -233,13 +258,13 @@ function keyValueToGraph(dictionary) {
   return array;
 }
 
-
- function getCountryName (countryCode) {
+function getCountryName(countryCode) {
   if (isoCountries.hasOwnProperty(countryCode)) {
-      return isoCountries[countryCode];
+    return isoCountries[countryCode];
   } else {
-      return countryCode;
-  }}
+    return countryCode;
+  }
+}
 
 function keyValueToPieChart(dictionary) {
   var array = [];
