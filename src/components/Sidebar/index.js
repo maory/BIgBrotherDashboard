@@ -55,14 +55,19 @@ class Sidebar extends Component {
                     'nav nav-second-level': true,
                     collapse: this.state.chartsElementsCollapsed,
                   })
-              }
+                }
               >
                 <li>
                   <a href="" onClick={(e) => { e.preventDefault(); history.push('/flotcharts'); }} >
                     Statistics
                   </a>
                 </li>
-            {/* - */}
+                <li>
+                  <a href="" onClick={(e) => { e.preventDefault(); history.push('/CountryMap'); }} >
+                    Country entries
+                  </a>
+                </li>
+
               </ul>
             </li>
 
@@ -73,7 +78,7 @@ class Sidebar extends Component {
               </a>
             </li>
 
-              {/*
+            {/*
             <li>
               <a href="" onClick={(e) => { e.preventDefault(); history.push('/forms'); }} >
                 <i className="fa fa-table fa-fw" /> &nbsp;Forms

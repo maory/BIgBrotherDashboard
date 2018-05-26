@@ -199,14 +199,14 @@ app.get('/getBytesStatisticData', (req, res) => {
 });
 
 
-app.get('/getCountriesData', (req, res) => {
+app.get('/getMapData', (req, res) => {
   let countryEntriesAmount = getCountriesEntriesAmount();
   let flag;
 
-  var colnedMapData = JSON.parse(JSON.stringify(mapData));
+  var clonedMapData = JSON.parse(JSON.stringify(mapData));
 
   // Build map data
-  colnedMapData.objects.units.geometries.forEach(function (obj) {
+  clonedMapData.objects.units.geometries.forEach(function (obj) {
     flag = false;
     for (var key in countryEntriesAmount) {
       if (obj.properties.name.includes(key)) {
@@ -223,7 +223,11 @@ app.get('/getCountriesData', (req, res) => {
   );
 
   //console.log(mapData.objects.units.geometries.map(x => x.properties.name));
-  res.send(colnedMapData);
+  res.send(clonedMapData);
+});
+
+app.get('/getCountriesEntriesAmount', (req, res) => {
+  res.send(keyValueToGraph(getCountriesEntriesAmount()));
 });
 
 function getCountriesEntriesAmount() {

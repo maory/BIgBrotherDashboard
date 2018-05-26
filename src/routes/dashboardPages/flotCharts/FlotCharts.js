@@ -19,7 +19,8 @@ var serviceTypeData = plotServiceTypeData();
 var protocolChartData = plotProtocolTypeData();
 var bytesStatisticChartData = plotBytesStatisticChartData();
 var sessionDurationChartData = plotSessionDurationData();
-var worldmapIpConutData = plotCountriesData();
+var worldmapIpConutData = plotMapData();
+var countriesEntriesAmountData = plotCountriesEntryData();
 
 
 function plotSessionDurationData() {
@@ -52,12 +53,17 @@ function plotBytesStatisticChartData() {
     .then(data => bytesStatisticChartData = data);
 }
 
-function plotCountriesData() {
-  return fetch('/getCountriesData')
+function plotMapData() {
+  return fetch('/getMapData')
     .then(response => response.json())
     .then(data => worldmapIpConutData = data);
 }
 
+function plotCountriesEntryData() {
+  return fetch('/getCountriesEntriesAmount')
+    .then(response => response.json())
+    .then(data => countriesEntriesAmountData = data);
+}
 
 function displayFlotCharts(props, context) {
 
@@ -66,7 +72,8 @@ function displayFlotCharts(props, context) {
   plotServiceTypeData();
   plotDataHoursData();
   plotSessionDurationData();
-  plotCountriesData();
+  plotMapData();
+  plotCountriesEntryData();
 
   context.setTitle(title);
   return (
@@ -171,7 +178,7 @@ function displayFlotCharts(props, context) {
 
         <div className="row">
           <div className="col-lg-12">
-            <Panel header={<span>Ips by country</span>} >
+            <Panel header={<span>Map Enteries</span>} >
               <div>
                 <ResponsiveContainer width="100%" aspect={2}>
                   <BasicMap mapData={worldmapIpConutData} />
@@ -180,6 +187,29 @@ function displayFlotCharts(props, context) {
             </Panel>
           </div>
         </div>
+
+        <div className="row">
+          <div className="col-lg-12">
+            <Panel header={<span>Countries graph </span>} >
+            <div>
+              <ResponsiveContainer width="100%" aspect={2}>
+                <BarChart
+                  data={countriesEntriesAmountData}
+                  margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="data" fill="#8884d8" />
+                  {/*   <Bar dataKey="uv" fill="#82ca9d" />*/}
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Panel>
+          </div>
+        </div>
+
       </div>
     </div>
   );
