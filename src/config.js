@@ -53,6 +53,7 @@ export const connLogParseConfig = {
   header: true,
   trimHeader: true,
   skipEmptyLines: true,
+  comments: '#'
 };
 
 export var isoCountries = {
