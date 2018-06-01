@@ -64,7 +64,7 @@ class Sidebar extends Component {
                 </li>
                 <li>
                   <a href="" onClick={(e) => { e.preventDefault(); history.push('/CountryMap'); }} >
-                    Country entries
+                    Countries entries
                   </a>
                 </li>
 

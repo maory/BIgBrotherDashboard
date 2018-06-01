@@ -17,7 +17,7 @@ import errorPageStyle from './routes/error/ErrorPage.css';
 import routes from './routes';
 import assets from './assets'; // eslint-disable-line import/no-unresolved
 import { port, auth, connLogParseConfig, isoCountries } from './config';
-import mapData from './components/Map/world50m.json';
+import mapData from './routes/dashboardPages/Map/world50m.json';
 
 const app = express();
 const fs = require('fs');
