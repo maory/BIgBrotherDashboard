@@ -38,6 +38,7 @@
     "mongoose": "^5.0.17",
     "mui-datatables": "^1.1.6",
     "node-fetch": "1.6.0",
+    "node-virustotal": "^2.4.2",
     "normalize.css": "4.2.0",
     "papaparse": "^4.4.0",
     "passport": "0.3.2",
@@ -55,6 +56,7 @@
     "sqlite3": "3.1.4",
     "underscore": "^1.9.0",
     "universal-router": "1.2.2",
+    "virustotal.js": "^0.3.1",
     "whatwg-fetch": "1.0.0"
   },
   "devDependencies": {

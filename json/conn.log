@@ -5,8 +5,8 @@
 #path	conn
 #open	2017-12-13-10-14-01
 #types
-#time	string	addr	srcort	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
 #fields	ts	uid	id.orig_h	id.orig_p	id.resp_h	id.resp_p	proto	service	duration	orig_bytes	resp_bytes	conn_state	local_orig	local_resp	missed_bytes	history	orig_pkts	orig_ip_bytes	resp_pkts	resp_ip_bytes	tunnel_parents
+#time	string	addr	srcort	addr	port	enum	string	interval	count	count	string	bool	bool	count	string	count	count	count	count	set[string]
 1295981542.708292	CGObBC3hYKUSv7Wqp9	192.168.3.131	55950	72.14.213.102	80	tcp	http	0.058485	944	487	SF	-	-	0	ShADFadRf	5	1156	4	659	(empty)
 1295981543.461968	C1zgd34uCyO5gcQAl9	192.168.3.131	55955	207.46.148.38	80	tcp	http	0.028620	448	279	SF	-	-	0	ShADfFa	5	660	3	407	(empty)
 1295981543.337241	CVLigl2TZMPgwyIDR5	192.168.3.131	55954	65.55.17.37	80	tcp	http	1.776718	1837	24470	RSTO	-	-	0	ShADdFR	13	2369	19	25234	(empty)

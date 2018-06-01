@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom/server';
 import UniversalRouter from 'universal-router';
 import PrettyError from 'pretty-error';
 import * as Papa from 'papaparse';
+import virustotal from 'virustotal.js';
 import Html from './components/Html';
 import { ErrorPageWithoutStyle } from './routes/error/ErrorPage';
 import errorPageStyle from './routes/error/ErrorPage.css';
@@ -21,6 +22,7 @@ import mapData from './routes/dashboardPages/Map/world50m.json';
 
 const app = express();
 const fs = require('fs');
+var vtReport;
 
 //
 // Tell any CSS tooling (such as Material UI) to use all vendor prefixes if the
@@ -46,6 +48,129 @@ app.use(expressJwt({
   getToken: req => req.cookies.id_token,
 }));
 
+function uploadIpToVT(IpAdress) {
+  virustotal.setKey('db8bdbc2dcc403fa7ee090eb9305b1a0ffb5bdb95c4cec58323316672efb0d65');
+  return virustotal.getIpReport(IpAdress, function (err, res) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    vtReport = res;
+  });
+}
+
+// Naamani
+const userAgents = ['chrome', 'mozilla', 'explorer', 'safari', 'opera'];
+
+// Naamani
+function getSslData() {
+  return getJsonFromLogFile('./json/ssl.log');
+}
+
+// Check if the user agent is malicious 
+// Naamani
+function CheckUserAgent() {
+  let httpData = getHttpData();
+  let maliciousUserAgents = [];
+  let lowerCase;
+  httpData.forEach(log => {
+    if (log.user_agent === '-') {
+      return;
+    }
+    lowerCase = log.user_agent.toLowerCase();
+    for (var i = 0; i < userAgents.length; i++) {
+      if (lowerCase.includes(userAgents[i])) {
+        return;
+      }
+    }
+
+    maliciousUserAgents.push(log.user_agent);
+  });
+
+  return maliciousUserAgents;
+}
+
+// Naamani
+app.get('/scanUserAgents', (req, res) => {
+  let maliciousUserAgentslag = CheckUserAgent();
+  if (maliciousUserAgentslag.length === 0) {
+    res.send("User agent is valid");
+  }
+  else {
+    res.send(maliciousUserAgentslag);
+  }
+});
+
+// Check if there is "fake" http trafic.
+// Consider to return something else then the port (maybe the ip or something else...)
+// Naamani
+function checkValidPortsToProtocolsHttp() {
+  let httpData = getHttpData();
+  let bedHttpPorts = [];
+  httpData.forEach(log => {
+    if ((log['id.resp_p'] == 80) || (log['id.resp_p'] == 8080)) {
+      console.log("Legit http trafic");
+    }
+    else {
+      bedHttpPorts.push(log['id.resp_p']);
+      console.log("Bad port for http trafic");
+    }
+  });
+  return bedHttpPorts;
+}
+
+// Naamani
+app.get('/CheckHttpValidPorts', (req, res) => {
+  let badHttpPorts = checkValidPortsToProtocolsHttp();
+  if (badHttpPorts.length === 0) {
+    res.send("Legit http trafic");
+  }
+  else {
+    res.send(badHttpPorts);
+  }
+});
+
+// Naamani
+function checkValidPortsToProtocolsSsl() {
+  let sslData = getSslData();
+  let badSslPorts = [];
+  sslData.forEach(log => {
+    if ((log['id.resp_p'] == 443) || (log['id.resp_p'] == 8443) || (log['id.resp_p'] == 5443)) {
+      console.log("Legit Ssl trafic");
+    }
+    else {
+      badSslPorts.push(log['id.resp_p']);
+      console.log("Bad port for http trafic");
+    }
+  });
+  return badSslPorts;
+}
+
+// Naamani
+app.get('/CheckSslValidPorts', (req, res) => {
+  let badSslPorts = checkValidPortsToProtocolsSsl();
+  if (badSslPorts.length === 0) {
+    res.send("Legit Ssl trafic");
+  }
+  else {
+    res.send(badSslPorts);
+  }
+});
+
+
+function uploadDomainToVT(domainAddress) {
+  virustotal.setKey('db8bdbc2dcc403fa7ee090eb9305b1a0ffb5bdb95c4cec58323316672efb0d65');
+  return virustotal.getDomainReport(domainAddress, function (err, res) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    vtReport = res;
+  });
+}
+
 function getConnData() {
   var data = getJsonFromLogFile('./json/conn2.log');
 
@@ -67,8 +192,20 @@ app.get('/getHttpData', (req, res) => {
 app.get('/getLineChartData', (req, res) => {
   let data = getConnData();
   let groupedByData = groupByValueFunc(data.map(mapToTimeAndBytes), sum);
-
   res.send(keyValueToGraph(groupedByData));
+});
+
+app.get('/uploadIpToVT', (req, res) => {
+  res.send(uploadIpToVT('8.8.8.8'));
+});
+
+app.get('/uploadDomainToVT', (req, res) => {
+  res.send(uploadDomainToVT('www.fashionstune.com'));
+});
+
+app.get('/reportVT', (req, res) => {
+  console.log(vtReport);
+  res.send(vtReport);
 });
 
 app.get('/getSessionDurationData', (req, res) => {
