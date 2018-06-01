@@ -47,11 +47,21 @@ app.use(expressJwt({
 }));
 
 function getConnData() {
-  return getJsonFromLogFile('./json/conn2.log');
+  var data = getJsonFromLogFile('./json/conn2.log');
+
+  data.forEach(element => {
+    element.dateTime = moment.unix(parseInt(element.ts)).format('DD:MM:YYYY hh:mm:ss');
+  });
+  console.log(data[0]);
+  return data;
 }
 
 app.get('/getConn', (req, res) => {
   res.send(getConnData());
+});
+
+app.get('/getHttpData', (req, res) => {
+  res.send(getHttpData());
 });
 
 app.get('/getLineChartData', (req, res) => {
@@ -98,8 +108,6 @@ function mapToTimeAndBytes(logData) {
 function getHttpData() {
   return getJsonFromLogFile('./json/http.log');
 }
-
-
 
 function getJsonFromLogFile(path) {
   let data = fs.readFileSync(path, 'utf-8');
