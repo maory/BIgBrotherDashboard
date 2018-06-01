@@ -22,6 +22,9 @@ import mapData from './routes/dashboardPages/Map/world50m.json';
 
 const app = express();
 const fs = require('fs');
+// Naamani
+const userAgents = ['chrome', 'mozilla', 'explorer', 'safari', 'opera'];
+
 var vtReport;
 
 //
@@ -60,126 +63,7 @@ function uploadIpToVT(IpAdress) {
   });
 }
 
-// Naamani
-const userAgents = ['chrome', 'mozilla', 'explorer', 'safari', 'opera'];
-
-// Naamani
-function getSslData() {
-  return getJsonFromLogFile('./json/ssl.log');
-}
-
-// Check if the user agent is malicious 
-// Naamani
-function CheckUserAgent() {
-  let httpData = getHttpData();
-  let maliciousUserAgents = [];
-  let lowerCase;
-  httpData.forEach(log => {
-    if (log.user_agent === '-') {
-      return;
-    }
-    lowerCase = log.user_agent.toLowerCase();
-    for (var i = 0; i < userAgents.length; i++) {
-      if (lowerCase.includes(userAgents[i])) {
-        return;
-      }
-    }
-
-    maliciousUserAgents.push(log.user_agent);
-  });
-
-  return maliciousUserAgents;
-}
-
-// Naamani
-app.get('/scanUserAgents', (req, res) => {
-  let maliciousUserAgentslag = CheckUserAgent();
-  if (maliciousUserAgentslag.length === 0) {
-    res.send("User agent is valid");
-  }
-  else {
-    res.send(maliciousUserAgentslag);
-  }
-});
-
-// Check if there is "fake" http trafic.
-// Consider to return something else then the port (maybe the ip or something else...)
-// Naamani
-function checkValidPortsToProtocolsHttp() {
-  let httpData = getHttpData();
-  let bedHttpPorts = [];
-  httpData.forEach(log => {
-    if ((log['id.resp_p'] == 80) || (log['id.resp_p'] == 8080)) {
-      console.log("Legit http trafic");
-    }
-    else {
-      bedHttpPorts.push(log['id.resp_p']);
-      console.log("Bad port for http trafic");
-    }
-  });
-  return bedHttpPorts;
-}
-
-// Naamani
-app.get('/CheckHttpValidPorts', (req, res) => {
-  let badHttpPorts = checkValidPortsToProtocolsHttp();
-  if (badHttpPorts.length === 0) {
-    res.send("Legit http trafic");
-  }
-  else {
-    res.send(badHttpPorts);
-  }
-});
-
-// Naamani
-function checkValidPortsToProtocolsSsl() {
-  let sslData = getSslData();
-  let badSslPorts = [];
-  sslData.forEach(log => {
-    if ((log['id.resp_p'] == 443) || (log['id.resp_p'] == 8443) || (log['id.resp_p'] == 5443)) {
-      console.log("Legit Ssl trafic");
-    }
-    else {
-      badSslPorts.push(log['id.resp_p']);
-      console.log("Bad port for http trafic");
-    }
-  });
-  return badSslPorts;
-}
-
-// Naamani
-app.get('/CheckSslValidPorts', (req, res) => {
-  let badSslPorts = checkValidPortsToProtocolsSsl();
-  if (badSslPorts.length === 0) {
-    res.send("Legit Ssl trafic");
-  }
-  else {
-    res.send(badSslPorts);
-  }
-});
-
-
-function uploadDomainToVT(domainAddress) {
-  virustotal.setKey('db8bdbc2dcc403fa7ee090eb9305b1a0ffb5bdb95c4cec58323316672efb0d65');
-  return virustotal.getDomainReport(domainAddress, function (err, res) {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    vtReport = res;
-  });
-}
-
-function getConnData() {
-  var data = getJsonFromLogFile('./json/conn2.log');
-
-  data.forEach(element => {
-    element.dateTime = moment.unix(parseInt(element.ts)).format('DD:MM:YYYY hh:mm:ss');
-  });
-  console.log(data[0]);
-  return data;
-}
+//#region Get Methods
 
 app.get('/getConn', (req, res) => {
   res.send(getConnData());
@@ -208,9 +92,42 @@ app.get('/reportVT', (req, res) => {
   res.send(vtReport);
 });
 
+// Naamani
+app.get('/scanUserAgents', (req, res) => {
+  let maliciousUserAgentslag = CheckUserAgent();
+  if (maliciousUserAgentslag.length === 0) {
+    res.send("User agent is valid");
+  }
+  else {
+    res.send(maliciousUserAgentslag);
+  }
+}); 
+
+// Naamani
+app.get('/CheckSslValidPorts', (req, res) => {
+  let badSslPorts = checkValidPortsToProtocolsSsl();
+  if (badSslPorts.length === 0) {
+    res.send("Legit Ssl trafic");
+  }
+  else {
+    res.send(badSslPorts);
+  }
+});
+
+// Naamani
+app.get('/CheckHttpValidPorts', (req, res) => {
+  let badHttpPorts = checkValidPortsToProtocolsHttp();
+  if (badHttpPorts.length === 0) {
+    res.send("Legit http trafic");
+  }
+  else {
+    res.send(badHttpPorts);
+  }
+});
+
 app.get('/getSessionDurationData', (req, res) => {
   let data = getConnData();
-
+  
   // TODO : Should Come from config file or from client side ??
   let durationRanges = [0, , 0.1, 0.25, 0.5, 1, 1.5, 2, 5, 7, 12, 9999];
 
@@ -224,56 +141,15 @@ app.get('/getSessionDurationData', (req, res) => {
         if (!(range in groupedByDurations)) {
           groupedByDurations[range] = 0;
         }
-
+        
         groupedByDurations[range]++;
       }
     }
   });
-
+  
   res.send(keyValueToPieChart(groupedByDurations));
 });
 
-function mapToTimeAndBytes(logData) {
-  let dateTime = moment.unix(parseInt(logData.ts));
-
-  return {
-    key: dateTime.format('hh:mm:ss'),
-    value: logData.orig_bytes
-  };
-}
-
-function getHttpData() {
-  return getJsonFromLogFile('./json/http.log');
-}
-
-function getJsonFromLogFile(path) {
-  let data = fs.readFileSync(path, 'utf-8');
-  let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
-  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), connLogParseConfig);
-  return parsed.data;
-}
-
-function groupByValueFunc(data, groupByFunc) {
-  var groupedByData = {};
-
-  data.forEach(function (obj) {
-    if (groupedByData[obj.key] === undefined) {
-      groupedByData[obj.key] = 0;
-    }
-
-    groupByFunc(groupedByData, obj);
-  });
-
-  return groupedByData;
-}
-
-function sum(groupedByData, obj) {
-  groupedByData[obj.key] += parseInt(obj.value);
-}
-
-function count(groupedByData, obj) {
-  groupedByData[obj.key]++;
-}
 
 // gil
 app.get('/getServiceTypeData', (req, res) => {
@@ -284,16 +160,16 @@ app.get('/getServiceTypeData', (req, res) => {
       value: 1
     };
   });
-
+  
   var groupedByData = {};
-
+  
   specificData.forEach(function (obj) {
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
     groupedByData[obj.key] += 1;
   });
-
+  
   res.send(keyValueToGraph(groupedByData));
 });
 
@@ -306,17 +182,17 @@ app.get('/getProtocolTypeData', (req, res) => {
       value: 1
     };
   });
-
+  
   var groupedByData = {};
-
+  
   specificData.forEach(function (obj) {
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
-
+    
     groupedByData[obj.key] += 1;
   });
-
+  
   res.send(keyValueToGraph(groupedByData));
 });
 
@@ -335,20 +211,20 @@ app.get('/getBytesStatisticData', (req, res) => {
       value: logData.missed_bytes
     }];
   });
-
+  
   var groupedByData = {};
-
+  
   specificData.forEach(function (obj) {
     obj.forEach(function (obj) {
       if (groupedByData[obj.key] === undefined) {
         groupedByData[obj.key] = 0;
       }
-
+      
       if (!isNaN(obj.value))
-        groupedByData[obj.key] += parseInt(obj.value);
+      groupedByData[obj.key] += parseInt(obj.value);
     });
   });
-
+  
   res.send(keyValueToGraph(groupedByData));
 });
 
@@ -356,9 +232,9 @@ app.get('/getBytesStatisticData', (req, res) => {
 app.get('/getMapData', (req, res) => {
   let countryEntriesAmount = getCountriesEntriesAmount();
   let flag;
-
+  
   var clonedMapData = JSON.parse(JSON.stringify(mapData));
-
+  
   // Build map data
   clonedMapData.objects.units.geometries.forEach(function (obj) {
     flag = false;
@@ -369,20 +245,54 @@ app.get('/getMapData', (req, res) => {
         break;
       }
     }
-
+    
     if (!flag) {
       obj.properties.name += ': None visits'
     }
   }
-  );
+);
 
-  //console.log(mapData.objects.units.geometries.map(x => x.properties.name));
-  res.send(clonedMapData);
+res.send(clonedMapData);
 });
 
 app.get('/getCountriesEntriesAmount', (req, res) => {
   res.send(keyValueToGraph(getCountriesEntriesAmount()));
 });
+
+function mapToTimeAndBytes(logData) {
+  let dateTime = moment.unix(parseInt(logData.ts));
+  
+  return {
+    key: dateTime.format('hh:mm:ss'),
+    value: logData.orig_bytes
+  };
+}
+
+
+//#endregion 
+
+//#region Graphs Methods
+function groupByValueFunc(data, groupByFunc) {
+  var groupedByData = {};
+  
+  data.forEach(function (obj) {
+    if (groupedByData[obj.key] === undefined) {
+      groupedByData[obj.key] = 0;
+    }
+    
+    groupByFunc(groupedByData, obj);
+  });
+  
+  return groupedByData;
+}
+
+function sum(groupedByData, obj) {
+  groupedByData[obj.key] += parseInt(obj.value);
+}
+
+function count(groupedByData, obj) {
+  groupedByData[obj.key]++;
+}
 
 function getCountriesEntriesAmount() {
   let data = getConnData();
@@ -392,18 +302,18 @@ function getCountriesEntriesAmount() {
       value: 0,
     }
   });
-
+  
   var groupedByData = {};
-
+  
   specificData.forEach(function (obj) {
     obj.key = getCountryName(obj.key);
     if (groupedByData[obj.key] === undefined) {
       groupedByData[obj.key] = 0;
     }
-
+    
     groupedByData[obj.key] += 1;
   });
-
+  
   return groupedByData;
 }
 
@@ -412,7 +322,7 @@ function keyValueToGraph(dictionary) {
   for (var key in dictionary) {
     array.push({ name: key, data: dictionary[key] });
   }
-
+  
   return array;
 }
 
@@ -429,38 +339,108 @@ function keyValueToPieChart(dictionary) {
   for (var key in dictionary) {
     array.push({ name: key, value: dictionary[key] });
   }
-
+  
   return array;
 }
+//#endregion
 
-// app.use(passport.initialize());
-//
-// app.get('/login/facebook',
-//   passport.authenticate('facebook', { scope: ['email', 'user_location'], session: false })
-// );
-// app.get('/login/facebook/return',
-//   passport.authenticate('facebook', { failureRedirect: '/login', session: false }),
-//   (req, res) => {
-//     const expiresIn = 60 * 60 * 24 * 180; // 180 days
-//     const token = jwt.sign(req.user, auth.jwt.secret, { expiresIn });
-//     res.cookie('id_token', token, { maxAge: 1000 * expiresIn, httpOnly: true });
-//     res.redirect('/');
-//   }
-// );
+// Naamani
+function checkValidPortsToProtocolsSsl() {
+  let sslData = getSslData();
+  let badSslPorts = [];
+  sslData.forEach(log => {
+    if ((log['id.resp_p'] == 443) || (log['id.resp_p'] == 8443) || (log['id.resp_p'] == 5443)) {
+      console.log("Legit Ssl trafic");
+    }
+    else {
+      badSslPorts.push(log['id.resp_p']);
+      console.log("Bad port for http trafic");
+    }
+  });
+  return badSslPorts;
+}
 
-//
-// Register API middleware
-// -----------------------------------------------------------------------------
-// app.use('/graphql', expressGraphQL(req => ({
-//   schema,
-//   graphiql: true,
-//   rootValue: { request: req },
-//   pretty: process.env.NODE_ENV !== 'production',
-// })));
+// Check if the user agent is malicious 
+// Naamani
+function CheckUserAgent() {
+  let httpData = getHttpData();
+  let maliciousUserAgents = [];
+  let lowerCase;
+  httpData.forEach(log => {
+    if (log.user_agent === '-') {
+      return;
+    }
+    lowerCase = log.user_agent.toLowerCase();
+    for (var i = 0; i < userAgents.length; i++) {
+      if (lowerCase.includes(userAgents[i])) {
+        return;
+      }
+    }
+    
+    maliciousUserAgents.push(log.user_agent);
+  });
+  
+  return maliciousUserAgents;
+}
 
-//
-// Register server-side rendering middleware
-// -----------------------------------------------------------------------------
+function uploadDomainToVT(domainAddress) {
+  virustotal.setKey('db8bdbc2dcc403fa7ee090eb9305b1a0ffb5bdb95c4cec58323316672efb0d65');
+  return virustotal.getDomainReport(domainAddress, function (err, res) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    
+    vtReport = res;
+  });
+}
+//#region GetDataFunctions
+function getConnData() {
+  var data = getJsonFromLogFile('./json/conn2.log');
+  
+  data.forEach(element => {
+    element.dateTime = moment.unix(parseInt(element.ts)).format('DD:MM:YYYY hh:mm:ss');
+  });
+  
+  return data;
+}
+
+function getHttpData() {
+  return getJsonFromLogFile('./json/http.log');
+}
+
+function getJsonFromLogFile(path) {
+  let data = fs.readFileSync(path, 'utf-8');
+  let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
+  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), connLogParseConfig);
+  return parsed.data;
+}
+
+// Naamani
+function getSslData() {
+  return getJsonFromLogFile('./json/ssl.log');
+}
+
+//#endregion
+
+// Check if there is "fake" http trafic.
+// Consider to return something else then the port (maybe the ip or something else...)
+// Naamani
+function checkValidPortsToProtocolsHttp() {
+  let httpData = getHttpData();
+  let bedHttpPorts = [];
+  httpData.forEach(log => {
+    if ((log['id.resp_p'] == 80) || (log['id.resp_p'] == 8080)) {
+      console.log("Legit http trafic");
+    }
+    else {
+      bedHttpPorts.push(log['id.resp_p']);
+      console.log("Bad port for http trafic");
+    }
+  });
+  return bedHttpPorts;
+}
+
 app.get('*', async (req, res, next) => {
   try {
     let css = new Set();
@@ -524,14 +504,3 @@ app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 app.listen(port, () => {
   console.log(`The server is running at http://localhost:${port}/`);
 });
-
-//
-// Launch the server
-// -----------------------------------------------------------------------------
-/* eslint-disable no-console */
-// models.sync().catch(err => console.error(err.stack)).then(() => {
-//   app.listen(port, () => {
-//     console.log(`The server is running at http://localhost:${port}/`);
-//   });
-// });
-/* eslint-enable no-console */

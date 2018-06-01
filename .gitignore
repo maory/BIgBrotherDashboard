@@ -8,3 +8,7 @@ npm-debug.log
 build/server.js
 build/assets.js
 build/server.js.map
+build/assets.js
+build/package.json
+build/server.js
+build/server.js.map
