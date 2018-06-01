@@ -25,6 +25,7 @@ import panelwells from './dashboardPages/panelWells';
 import typography from './dashboardPages/typography';
 import blank from './dashboardPages/blank';
 import error from './error';
+import displayMapsCharts from './dashboardPages/Map';
 
 import Header from '../components/Header';
 // import connectionService from '../controllers/firstcontroller';
@@ -69,6 +70,7 @@ export default [
       // place new routes before...
       // content,
       error,
+      displayMapsCharts,
     ],
 
     async action({ next, render, context }) {

@@ -9,8 +9,8 @@ import {
   CartesianGrid, Bar, BarChart,
   ResponsiveContainer
 } from '../../../vendor/recharts';
-import BasicMap from '../../../components/Map/Map';
-import mapDataJson from '../../../components/Map/world50m';
+import BasicMap from '../Map/Map';
+import mapDataJson from '../Map/world50m';
 
 const title = 'Flot Charts';
 
