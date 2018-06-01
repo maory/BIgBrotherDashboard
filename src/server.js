@@ -47,16 +47,12 @@ app.use(expressJwt({
 }));
 
 function getConnData() {
-  let data = fs.readFileSync('./json/conn2.log', 'utf-8');
-  let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
-  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), connLogParseConfig);
-  return parsed.data;
+  return getJsonFromLogFile('./json/conn2.log');
 }
 
 app.get('/getConn', (req, res) => {
   res.send(getConnData());
 });
-
 
 app.get('/getLineChartData', (req, res) => {
   let data = getConnData();
@@ -97,6 +93,19 @@ function mapToTimeAndBytes(logData) {
     key: dateTime.format('hh:mm:ss'),
     value: logData.orig_bytes
   };
+}
+
+function getHttpData() {
+  return getJsonFromLogFile('./json/http.log');
+}
+
+
+
+function getJsonFromLogFile(path) {
+  let data = fs.readFileSync(path, 'utf-8');
+  let seperatedString = data.split('#fields')[1].split('#close')[0].substr(1);
+  let parsed = Papa.parse(seperatedString.replace(/(\r)/gm, ""), connLogParseConfig);
+  return parsed.data;
 }
 
 function groupByValueFunc(data, groupByFunc) {
